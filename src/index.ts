@@ -1,8 +1,8 @@
-import express, { Express, query } from "express";
+import express, { Express } from "express";
 import { PORT } from "./secret";
 import rootRouter from "./routes";
 import { PrismaClient } from "@prisma/client";
-import { errorMiddleWare } from "./middlewares/errors";
+import { ErrorMiddleWare } from "./middlewares/errors";
 
 const app: Express = express();
 
@@ -14,7 +14,7 @@ export const prismaClient = new PrismaClient({
   log: ["info"],
 });
 
-app.use(errorMiddleWare);
+app.use(ErrorMiddleWare);
 
 app.listen(PORT, () => {
   console.log("Server is running on " + PORT);

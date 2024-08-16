@@ -1,34 +1,61 @@
-import { ErrorCode, HttpException } from "./generic";
+import { GenericErrorMessage } from "../helpers/error-messages";
+import { ErrorCode, ErrorStatusCode, HttpException } from "./generic";
 
+/**
+ *  Error Exception for bad request http request
+ */
 export class BadRequest extends HttpException {
   constructor(message: string, erroCode: ErrorCode, errors: any = null) {
-    super(message, erroCode, 400, errors);
+    super(message, erroCode, ErrorStatusCode.BAD_REQUEST, errors);
   }
 }
 
+/**
+ * Error Exception for not found http request
+ */
+export class NotFound extends HttpException {
+  constructor(messge: string, errorCode: ErrorCode, errors: any = null) {
+    super(messge, errorCode, ErrorStatusCode.NOT_FOUND, errors);
+  }
+}
+
+/**
+ * Error Exception for unauthorize access http request
+ */
 export class UnAuthorize extends HttpException {
   constructor(errors: any = null) {
     super(
-      "Unauthorize access. Please login again!",
+      GenericErrorMessage.unAuthorizeAccess,
       ErrorCode.UNAUTHORIZE,
-      401,
+      ErrorStatusCode.UNAUTHORIZE,
       errors
     );
   }
 }
 
+/**
+ * Error Exception for internal server error htpp request
+ */
 export class ServerError extends HttpException {
   constructor(errors: any = null) {
-    super("Something went wrong.", ErrorCode.SERVER_ERROR, 500, errors);
+    super(
+      GenericErrorMessage.serverError,
+      ErrorCode.SERVER_ERROR,
+      ErrorStatusCode.SERVER_ERROR,
+      errors
+    );
   }
 }
 
+/**
+ * Error Exception for unprocessable entity http request
+ */
 export class UnProcessableEntity extends HttpException {
   constructor(errors: any) {
     super(
-      "UnProcessable entity error.",
+      GenericErrorMessage.unprocessableEntity,
       ErrorCode.UNPROCESSABLE_ENTITY,
-      422,
+      ErrorStatusCode.UNPROCESSABLE_ENITY,
       errors
     );
   }

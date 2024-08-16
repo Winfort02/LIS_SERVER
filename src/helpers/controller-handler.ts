@@ -2,6 +2,11 @@ import { NextFunction, Request, Response } from "express";
 import { HttpException } from "../exceptions/generic";
 import { ServerError, UnProcessableEntity } from "../exceptions/request";
 
+/**
+ * Method to handle controller functions/ method
+ * @param controller
+ * @returns JSON Object specific to error exception
+ */
 export const ControllerHandler = (controller: Function) => {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {

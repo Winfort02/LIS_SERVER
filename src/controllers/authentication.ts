@@ -1,63 +1,71 @@
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import { prismaClient } from "..";
 import { hashSync, compareSync } from "bcrypt";
 import * as jwt from "jsonwebtoken";
-import { JWT_SECRET_KEY } from "../secret";
 import { BadRequest } from "../exceptions/request";
 import { ErrorCode, SuccessCode } from "../exceptions/generic";
 import { signUpSchema } from "../schema/users";
 import { LoginErrorMessage } from "../helpers/error-messages";
-import { SuccessReponse } from "../helpers/response";
+import { SuccessReponse, UserResponse } from "../helpers/response";
+import { User } from "@prisma/client";
+import { generateSignToken } from "../helpers/sign-token";
 
 const { userNotFound, invalidCredential, emailExist } = LoginErrorMessage;
 const { NOT_EXIST, INCORRECT_CREDENTIALS, EXISTING } = ErrorCode;
 
-export const login = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+/**
+ * Method to validate user login credential
+ * @param req request parameter
+ * @param res response parameter
+ * @returns JSON Object
+ */
+export const Login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
   const user = await prismaClient.user.findFirst({ where: { email } });
   if (!user) {
-    return next(new BadRequest(userNotFound, NOT_EXIST));
+    throw new BadRequest(userNotFound, NOT_EXIST);
   }
 
   const isAuthenticated = compareSync(password, user.password);
   if (!isAuthenticated) {
-    return next(new BadRequest(invalidCredential, INCORRECT_CREDENTIALS));
+    throw new BadRequest(invalidCredential, INCORRECT_CREDENTIALS);
   }
-
-  const token = jwt.sign(
-    {
-      userId: user.id,
-      email: user.email,
-      username: user.name,
-    },
-    JWT_SECRET_KEY
+  const { key, _user, options } = generateSignToken(user);
+  const token = jwt.sign(_user, key, options);
+  const userResponse = new UserResponse(user);
+  return res.json(
+    new SuccessReponse({ userResponse, token }, SuccessCode.OK, true)
   );
-  return res.json(new SuccessReponse({ user, token }, SuccessCode.OK, true));
 };
 
-export const signUp = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+/**
+ * Method to create a user
+ * @param req request parameter
+ * @param res response parameter
+ * @returns JSON Object
+ */
+export const SignUp = async (req: Request, res: Response) => {
   signUpSchema.parse(req.body);
   const { email, name, password } = req.body;
 
   const user = await prismaClient.user.findFirst({ where: { email } });
   if (user) {
-    return next(new BadRequest(emailExist, EXISTING));
+    throw new BadRequest(emailExist, EXISTING);
   }
 
   const createdUser = await prismaClient.user.create({
-    data: {
-      name: name,
-      email: email,
-      password: hashSync(password, 12),
-    },
+    data: { name, email, password: hashSync(password, 12) },
   });
-  return res.json(new SuccessReponse(createdUser, SuccessCode.CREATED, true));
+  const userResponse = new UserResponse(createdUser);
+  return res.json(new SuccessReponse(userResponse, SuccessCode.CREATED, true));
+};
+
+/**
+ * Method to get the current login details base in the token
+ * @param req request parameter
+ * @param res response parameter
+ * @returns JSON Object
+ */
+export const GetUserFromToken = async (req: Request, res: Response) => {
+  res.json(new UserResponse(req.user as User));
 };
