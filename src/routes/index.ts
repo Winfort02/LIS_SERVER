@@ -7,6 +7,6 @@ const rootRouter: Router = Router();
 
 rootRouter.use("/auth", authRoutes);
 rootRouter.use("/users", userRoutes);
-rootRouter.use("/patient", patientRouter);
+rootRouter.use("/patients", patientRouter);
 
 export default rootRouter;

@@ -6,6 +6,7 @@ import { ErrorCode, SuccessCode } from "../exceptions/generic";
 import { patientSchema } from "../schema/users";
 import { NotFound } from "../exceptions/request";
 import { PatientErrorMessage } from "../helpers/error-messages";
+import { CountQuery, pagination, PaginationQuery } from "../helpers/common";
 
 /**
  * Method to create patient record and insert into database
@@ -58,8 +59,18 @@ export const DeletePatient = async (req: Request, res: Response) => {
  * @returns JSON Response object
  */
 export const GetAllPatients = async (req: Request, res: Response) => {
-  const patients = await prismaClient.patient.findMany();
-  return res.json(new SuccessReponse(patients, SuccessCode.OK, true));
+  const page = parseInt(req.query.page as string) || 1;
+  const pageSize = parseInt(req.query.size as string) || 25;
+  const keywords = (req.query.keywords as string) || "";
+  const offset = (page - 1) * pageSize;
+  const patients = await prismaClient.patient.findMany(
+    PaginationQuery(keywords, "last_name", offset, pageSize, "id", "asc")
+  );
+  const totalPages = await prismaClient.patient.count(
+    CountQuery(keywords, "last_name")
+  );
+  const paginate = pagination(page, pageSize, totalPages, patients);
+  return res.json(new SuccessReponse(paginate, SuccessCode.OK, true));
 };
 
 /**

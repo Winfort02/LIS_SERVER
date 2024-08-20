@@ -37,7 +37,7 @@ model Patient {
   first_name           String
   middle_name          String
   contact_number       String
-  date_of_birth        DateTime               @db.DateTime
+  date_of_birth        DateTime               @db.Date
   sex                  String
   address              String                 @db.Text
   civil_status         String
@@ -45,6 +45,7 @@ model Patient {
   ResultTypeHematology ResultTypeHematology?
   ResultTypeChemistry  ResultTypeChemistry?
   ResultTypeUrinalysis ResultTypeUrinalysis[]
+  createdAt            DateTime               @default(now())
 
   @@map("patients")
 }

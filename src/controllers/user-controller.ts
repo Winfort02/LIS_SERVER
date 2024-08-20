@@ -5,6 +5,7 @@ import { SuccessReponse, UserResponse } from "../helpers/response";
 import { Request, Response } from "express";
 import { NotFound } from "../exceptions/request";
 import { UserErrorMessage } from "../helpers/error-messages";
+import { CountQuery, pagination, PaginationQuery } from "../helpers/common";
 
 /**
  * Method to get all the users from the database
@@ -13,9 +14,19 @@ import { UserErrorMessage } from "../helpers/error-messages";
  * @returns JSON Object
  */
 export const GetAllUsers = async (req: Request, res: Response) => {
-  const users = await prismaClient.user.findMany();
+  const page = parseInt(req.query.page as string) || 1;
+  const pageSize = parseInt(req.query.size as string) || 25;
+  const keywords = (req.query.keywords as string) || "";
+  const offset = (page - 1) * pageSize;
+  const users = await prismaClient.user.findMany(
+    PaginationQuery(keywords, "name", offset, pageSize, "id", "asc")
+  );
+  const totalPages = await prismaClient.user.count(
+    CountQuery(keywords, "name")
+  );
   const userResponse = users.map((item: User) => new UserResponse(item));
-  return res.json(new SuccessReponse(userResponse, SuccessCode.OK, true));
+  const paginate = pagination(page, pageSize, totalPages, userResponse);
+  return res.json(new SuccessReponse(paginate, SuccessCode.OK, true));
 };
 
 /**
@@ -43,10 +54,10 @@ export const GetUserById = async (req: Request, res: Response) => {
  */
 export const UpdateUser = async (req: Request, res: Response) => {
   const id = parseInt(req.params.id, 10);
-  const { name, email, role } = req.body;
+  const { name, email } = req.body;
   const updatedUser = await prismaClient.user.update({
     where: { id },
-    data: { name, email, role },
+    data: { name, email },
   });
   return res.json(
     new SuccessReponse(new UserResponse(updatedUser), SuccessCode.UPDATED, true)

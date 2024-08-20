@@ -3,10 +3,12 @@ import { PORT } from "./secret";
 import rootRouter from "./routes";
 import { PrismaClient } from "@prisma/client";
 import { ErrorMiddleWare } from "./middlewares/errors";
+import cors from "cors";
 
 const app: Express = express();
 
 app.use(express.json());
+app.use(cors());
 
 app.use("/api", rootRouter);
 
