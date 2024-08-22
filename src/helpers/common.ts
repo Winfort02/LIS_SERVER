@@ -17,12 +17,54 @@ export const pagination = (
   };
 };
 
+export const CountSingleRelationQuery = (
+  keywords: string,
+  relation: string,
+  property: string
+) => {
+  return {
+    where: {
+      [relation]: {
+        [property]: {
+          contains: keywords,
+        },
+      },
+    },
+  };
+};
+
 export const CountQuery = (keywords: string, property: string) => {
   return {
     where: {
       [property]: {
         contains: keywords,
       },
+    },
+  };
+};
+
+export const PaginationWithSingleRelation = (options: {
+  keywords: string;
+  relation: string;
+  searchProperty: string;
+  skip: number;
+  take: number;
+  orderByProperty: string;
+  orderBy: string;
+}) => {
+  return {
+    ...CountSingleRelationQuery(
+      options.keywords,
+      options.relation,
+      options.searchProperty
+    ),
+    skip: options.skip,
+    take: options.take,
+    orderBy: {
+      [options.orderByProperty]: options.orderBy,
+    },
+    include: {
+      [options.relation]: true,
     },
   };
 };

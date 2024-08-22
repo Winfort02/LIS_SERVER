@@ -26,8 +26,6 @@ model User {
   role      Role       @default(USER)
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
-  UsageLog  UsageLog[]
-
   @@map("users")
 }
 
@@ -41,148 +39,32 @@ model Patient {
   sex                  String
   address              String                 @db.Text
   civil_status         String
-  test_orders          TestOrder[]
-  ResultTypeHematology ResultTypeHematology?
-  ResultTypeChemistry  ResultTypeChemistry?
-  ResultTypeUrinalysis ResultTypeUrinalysis[]
+  hematologies         Hematology[]
   createdAt            DateTime               @default(now())
 
   @@map("patients")
 }
 
-model TestOrder {
-  id                     Int                    @id @default(autoincrement())
-  test_type              String                 @db.Text
-  specify_test           String                 @db.Text
-  sample                 String                 @db.Text
-  patient                Patient                @relation(fields: [patient_id], references: [id])
-  patient_id             Int                    @unique
-  collection_date_time   DateTime               @default(now())
-  result_type_hematology ResultTypeHematology?
-  result_type_chemistry  ResultTypeChemistry?
-  ResultTypeUrinalysis   ResultTypeUrinalysis[]
-
-  @@map("test_orders")
-}
-
-model ResultTypeHematology {
+model Hematology {
   id                              Int       @id @default(autoincrement())
-  test_order                      TestOrder @relation(fields: [test_order_id], references: [id])
-  test_order_id                   Int       @unique
-  patient                         Patient   @relation(fields: [patient_id], references: [id])
-  patient_id                      Int       @unique
-  test_requested_hemoglobin       Int?
-  test_requested_hematocrit       Int?
-  test_requested_rbc_count        Int?
-  test_requested_wbc_count        Int?
-  test_requested_platelet_count   Int?
-  test_requested_dc_neutrophil    Int?
-  test_requested_segmented        Int?
-  test_requested_dc_stab          Int?
-  test_requested_dc_lymhocytes    Int?
-  test_requested_monocytes        Int?
-  test_requested_dc_eosinophils   Int?
-  test_requested_dc_basophils     Int?
-  test_requested_blood_typing_abo Int?
-  test_requested_blood_typing_rh  Int?
-  date_of_result                  DateTime  @default(now())
+  patient_id                      Int    
+  patient                         Patient   @relation(fields: [patient_id], references: [id])   
+  physician                       String
+  lab_no                          Decimal   @db.Decimal(10, 2)
+  hemoglobin                      Decimal   @db.Decimal(10, 2)
+  hematocrit                      Decimal   @db.Decimal(10, 2)
+  rbc_count                       Decimal   @db.Decimal(10, 2)
+  wbc_count                       Decimal   @db.Decimal(10, 2)
+  platelet_count                  Decimal   @db.Decimal(10, 2)
+  neutrophil                      Decimal   @db.Decimal(10, 2)
+  segmented                       Decimal   @db.Decimal(10, 2)
+  stab                            Decimal   @db.Decimal(10, 2)
+  lymphocyties                    Decimal   @db.Decimal(10, 2)
+  monocyties                      Decimal   @db.Decimal(10, 2)
+  eosinophils                     Decimal   @db.Decimal(10, 2)
+  basophils                       Decimal   @db.Decimal(10, 2)
+  createdAt                       DateTime  @default(now())
   remarks                         String    @db.Text
 
-  @@map("result_type_hematology")
-}
-
-model ResultTypeChemistry {
-  id                              Int       @id @default(autoincrement())
-  test_order                      TestOrder @relation(fields: [test_order_id], references: [id])
-  test_order_id                   Int       @unique
-  patient                         Patient   @relation(fields: [patient_id], references: [id])
-  patient_id                      Int       @unique
-  last_meal                       Int?
-  time_taken                      Int?
-  blood_sugar_fasting             Int?
-  blood_sugar_random              Int?
-  blood_sugar_2hr_post            Int?
-  prandial                        String?
-  lipid_profile_total_choresterol Int?
-  lipid_profile_triglycerides     Int?
-  lipid_profile_hdl               Int?
-  kidney_ft_uric_acid             Int?
-  kidney_ft_creatine              Int?
-  kidney_ft_bun                   Int?
-  enzymes_sgpt                    Int?
-  enzymes_sgot                    Int?
-  electrolytes_sodium             Int?
-  electrolytes_potassium          Int?
-  electrolytes_calcium            Int?
-  date_of_result                  DateTime  @default(now())
-  remarks                         String    @db.Text
-
-  @@map("result_type_chemistry")
-}
-
-model ResultTypeUrinalysis {
-  id                                 Int       @id @default(autoincrement())
-  test_order                         TestOrder @relation(fields: [test_order_id], references: [id])
-  test_order_id                      Int
-  patient                            Patient   @relation(fields: [patient_id], references: [id])
-  patient_id                         Int
-  physical_property_color            String?   @db.Text
-  physical_property_transparency     String?   @db.Text
-  physical_property_ph               Int?
-  physical_property_specific_gravity Int?
-  chemical_test_reducing_sugar       Int?
-  chemical_test_protein              Int?
-  me_wbc                             Int?
-  me_rbc                             Int?
-  me_ec_squamous                     String?   @db.Text
-  me_ec_renal_tubolar                String?   @db.Text
-  me_ec_transitional                 String?   @db.Text
-  me_ec_bacteria                     String?   @db.Text
-  me_ec_yeast                        String?   @db.Text
-  me_ec_mucos_threads                String?   @db.Text
-  me_crytals_amorphous_urates        String?   @db.Text
-  me_crytals_amorphous_phosphates    String?   @db.Text
-  me_crytals_uric_acid               String?   @db.Text
-  me_crytals_calcium_oxalate         String?   @db.Text
-  me_crytals_tripple_phosphate       String?   @db.Text
-  me_crytals_calcium_carbonate       String?   @db.Text
-  me_crytals_phosphate               String?   @db.Text
-  me_crytals_ammonium_biurate        String?   @db.Text
-  me_cast_hyline                     String?   @db.Text
-  me_cast_fine_granular              String?   @db.Text
-  me_cast_coarse_granular            String?   @db.Text
-  me_cast_rbc                        String?   @db.Text
-  me_cast_wbc                        String?   @db.Text
-  me_cast_waxy                       String?   @db.Text
-  me_cast_board                      String?   @db.Text
-  date_of_result                     DateTime  @default(now())
-  remarks                            String    @db.Text
-
-  @@map("result_type_urinalysis")
-}
-
-model Inventory {
-  id                Int        @id @default(autoincrement())
-  item              String     @db.Text
-  item_type         String     @db.Text
-  item_description  String     @db.Text
-  quantity_in_stock Int
-  reorder_level     Int
-  storage_location  Int
-  UsageLog          UsageLog[]
-
-  @@map("inventory")
-}
-
-model UsageLog {
-  id             Int       @id @default(autoincrement())
-  user           User      @relation(fields: [user_id], references: [id])
-  user_id        Int
-  inventory      Inventory @relation(fields: [inventory_id], references: [id])
-  inventory_id   Int
-  quantity_used  Int
-  date_of_use    DateTime  @default(now())
-  purpose_of_use String    @db.Text
-
-  @@map("usage_logs")
+  @@map("hematology")
 }

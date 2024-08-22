@@ -17,3 +17,7 @@ export const GenericErrorMessage = {
 export const PatientErrorMessage = {
   notFound: "Patient not found. Please try again!",
 };
+
+export const TestErrorMessage = {
+  notFound: "Test order not found. Please try again !",
+};

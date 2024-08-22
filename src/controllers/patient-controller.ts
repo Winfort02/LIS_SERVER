@@ -3,7 +3,7 @@ import { prismaClient } from "..";
 import { PatientRequest } from "../helpers/request";
 import { SuccessReponse } from "../helpers/response";
 import { ErrorCode, SuccessCode } from "../exceptions/generic";
-import { patientSchema } from "../schema/users";
+import { patientSchema } from "../schema/schema";
 import { NotFound } from "../exceptions/request";
 import { PatientErrorMessage } from "../helpers/error-messages";
 import { CountQuery, pagination, PaginationQuery } from "../helpers/common";

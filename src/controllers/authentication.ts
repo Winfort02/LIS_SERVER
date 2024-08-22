@@ -4,7 +4,7 @@ import { hashSync, compareSync } from "bcrypt";
 import * as jwt from "jsonwebtoken";
 import { BadRequest } from "../exceptions/request";
 import { ErrorCode, SuccessCode } from "../exceptions/generic";
-import { signUpSchema } from "../schema/users";
+import { signUpSchema } from "../schema/schema";
 import { LoginErrorMessage } from "../helpers/error-messages";
 import { SuccessReponse, UserResponse } from "../helpers/response";
 import { User } from "@prisma/client";
