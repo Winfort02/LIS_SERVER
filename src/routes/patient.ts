@@ -6,6 +6,7 @@ import {
   DeletePatient,
   GetAllPatients,
   GetPatientDetail,
+  GetPatients,
   UpdatePatient,
 } from "../controllers/patient-controller";
 
@@ -39,6 +40,12 @@ patientRouter.delete(
   "/:id",
   [AuthenticationMiddleWare],
   ControllerHandler(DeletePatient)
+);
+
+patientRouter.get(
+  "/all/patients",
+  [AuthenticationMiddleWare],
+  ControllerHandler(GetPatients)
 );
 
 export default patientRouter;

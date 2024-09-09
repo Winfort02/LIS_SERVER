@@ -6,15 +6,19 @@ const prismaClient = new PrismaClient();
 async function main() {
   const userCount = await prismaClient.user.count();
 
-  if (userCount === 0) {
-    await prismaClient.user.create({
-      data: {
-        name: "Administrator",
-        email: "admin01@gmail.com",
-        role: "ADMIN",
-        password: hashSync("Admin123", 12),
-      },
-    });
+  try {
+    if (userCount === 0) {
+      await prismaClient.user.create({
+        data: {
+          name: "Administrator",
+          email: "admin01@gmail.com",
+          role: "ADMIN",
+          password: hashSync("Admin123", 12),
+        },
+      });
+    }
+  } catch (error) {
+    console.log(error)
   }
 }
 

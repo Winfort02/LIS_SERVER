@@ -40,6 +40,7 @@ model Patient {
   address              String                 @db.Text
   civil_status         String
   hematologies         Hematology[]
+  urinalysis           Urinalysis[]
   createdAt            DateTime               @default(now())
 
   @@map("patients")
@@ -50,7 +51,7 @@ model Hematology {
   patient_id                      Int    
   patient                         Patient   @relation(fields: [patient_id], references: [id])   
   physician                       String
-  lab_no                          Decimal   @db.Decimal(10, 2)
+  lab_no                          String
   hemoglobin                      Decimal   @db.Decimal(10, 2)
   hematocrit                      Decimal   @db.Decimal(10, 2)
   rbc_count                       Decimal   @db.Decimal(10, 2)
@@ -67,4 +68,45 @@ model Hematology {
   remarks                         String    @db.Text
 
   @@map("hematology")
+}
+
+model Urinalysis {
+  id            Int       @id @default(autoincrement())
+  patient_id    Int
+  patient       Patient   @relation(fields: [patient_id], references: [id])
+  physician     String
+  lab_no        String
+  color         String?
+  transparancy  String?
+  ph            Decimal   @db.Decimal(10, 2)
+  spec_gravity  Decimal   @db.Decimal(10, 2)
+  reduce_sugar  String?
+  protein       String?
+  wbc_count     Decimal   @db.Decimal(10, 2)
+  rbc_count     Decimal   @db.Decimal(10, 2)
+  squamous      String?
+  rental_tubular  String?
+  transitional    String?
+  bacteria        String?
+  yeast           String?
+  mucus_thread    String?
+  amorphous_urates  String?
+  amorphous_phosphates  String?
+  uric_acid     String?
+  calcium_oxalate   String?
+  triple_phosphate  String?
+  calcium_carbonate String?
+  calcium_phosphate String?
+  ammonium_biurate  String?
+  hyaline       String?
+  fine_granular String?
+  coarse_granular String?
+  cast_rbc      Decimal   @db.Decimal(10, 2)
+  cast_wbc      Decimal   @db.Decimal(10, 2)
+  cast_waxy     String?
+  cast_broad    String?
+  createdAt     DateTime  @default(now())
+  remarks       String?   @db.Text
+
+  @@map("urinalysis")
 }

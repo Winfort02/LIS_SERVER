@@ -87,3 +87,14 @@ export const GetPatientDetail = async (req: Request, res: Response) => {
   }
   return res.json(new SuccessReponse(patient, SuccessCode.OK, true));
 };
+
+/**
+ * Method to get all patients
+ * @param req
+ * @param res
+ * @returns JSON Response Object
+ */
+export const GetPatients = async (req: Request, res: Response) => {
+  const patients = await prismaClient.patient.findMany();
+  return res.json(new SuccessReponse(patients, SuccessCode.OK, true));
+};

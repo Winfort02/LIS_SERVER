@@ -18,6 +18,10 @@ export const PatientErrorMessage = {
   notFound: "Patient not found. Please try again!",
 };
 
-export const TestErrorMessage = {
-  notFound: "Test order not found. Please try again !",
+export const HematologyErrorMessage = {
+  notFound: "Hematology not found. Please try again !",
 };
+
+export const UrinalysisErrorMerssage = {
+  NotFound: "Urinalysis not found. Please try again !"
+}
