@@ -1,14 +1,23 @@
 import { Router } from "express";
 import { AuthenticationMiddleWare } from "../middlewares/authentication";
 import { ControllerHandler } from "../helpers/controller-handler";
-import { GenerateHematologyPDF } from "../controllers/report-controller";
+import {
+  GenerateHematologyPDF,
+  GenerateUrinalysisPDF,
+} from "../controllers/report-controller";
 
 const reportRouter: Router = Router();
 
 reportRouter.get(
-  "/:id",
+  "/hematogoly/:id",
   [AuthenticationMiddleWare],
   ControllerHandler(GenerateHematologyPDF)
+);
+
+reportRouter.get(
+  "/urinalysis/:id",
+  [AuthenticationMiddleWare],
+  ControllerHandler(GenerateUrinalysisPDF)
 );
 
 export default reportRouter;

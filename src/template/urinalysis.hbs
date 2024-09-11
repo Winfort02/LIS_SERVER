@@ -1,0 +1,210 @@
+<style>
+  body, html { margin: 0; padding: 0; box-sizing: border-box; font-family:
+  'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode',
+  Geneva, Verdana, sans-serif; } .container { width: 100%; padding: 10px; }
+  .header { text-align: center;} .header span { color: rgb(218, 6, 6)} table
+  {width: 97%; border-collapse: collapse; text-transform: uppercase; } table tr
+  th { border: 1px solid #000; text-align: left; padding: 5px 8px; font-size:
+  12px; font-weight: normal;} .sub-title { text-align: center; height: 20px;
+  width: 97%; background-color: rgba(240, 255, 28, 0.925);} .sub-title h4 {
+  letter-spacing: 3px; };
+</style>
+<html>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h2> STAT<span>LAB</span> DIAGNOSTIC LABORATORY</h2>
+        <h5>Lor lin Bldg. 172-D Corner Magsaysay St. and Lizares St. Zone 6.
+          Talisay City, Neg. Occ.. Phil. 6115
+        </h5>
+        <h5>PHONE NOS. 09568255620 / 09128677606 GMAIL: statlabtalisay@gmail.com
+          FB PAGE: STAT LAB
+        </h5>
+      </div>
+      <div class="content-detail">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 150px;">PATIENT NAME: </th>
+              <th style="width: 300px;">
+                {{data.patient.last_name}}
+                {{data.patient.first_name}},
+                {{data.patient.middle_name}}</th>
+              <th style="width: 70px;">SEX: </th>
+              <th>{{data.patient.sex}}</th>
+            </tr>
+            <tr>
+              <th style="width: 150px;">ADDRESS: </th>
+              <th style="width: 300px;">
+                {{data.patient.address}}</th>
+              <th style="width: 70px;">Date: </th>
+              <th>{{dateFormat data.createdAt "LLL"}}</th>
+            </tr>
+            <tr>
+              <th style="width: 150px;">PHYSICIAN: </th>
+              <th style="width: 300px;">
+                {{data.physician}}</th>
+              <th style="width: 70px;">LAB NO: </th>
+              <th>{{data.lab_no}}</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+      <div class="sub-title">
+        <h4>URINALYSIS</h4>
+      </div>
+      <div style="margin-top: 20px;">
+        <table>
+          <thead>
+            <tr>
+              <th
+                colspan="2"
+                style="text-align: center; width: 70px; background: rgba(0, 0, 0, 0.2);"
+              >PHYSICAL PROPERTIES
+              </th>
+              <th
+                colspan="2"
+                style="text-align: center; background: rgba(0, 0, 0, 0.2);"
+              > CHEMICAL TEST</th>
+            </tr>
+            <tr>
+              <th style="width: 200px;">COLOR </th>
+              <th>{{data.color}} </th>
+              <th rowspan="2" style="width: 150px; text-align: center">REDUCING
+                SUGAR
+              </th>
+              <th rowspan="2" style="text-align: center">
+                {{data.reduce_sugar}}
+              </th>
+            </tr>
+            <tr>
+              <th>TRANSPARENCY </th>
+              <th> {{data.transparancy}} </th>
+            </tr>
+            <tr>
+              <th>PH </th>
+              <th>{{data.ph}} </th>
+              <th rowspan="2" style="text-align: center">PROTEIN</th>
+              <th rowspan="2" style="text-align: center">
+                {{data.protein}}
+              </th>
+            </tr>
+            <tr>
+              <th>SPECIFIC GRAVITY </th>
+              <th> {{data.spec_gravity}} </th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+      <div style="margin-top: 20px;">
+        <table>
+          <thead>
+            <tr>
+              <th
+                colspan="4"
+                style="text-align: center; background: rgba(0, 0, 0, 0.2);"
+              >
+                MICROSCOPIC EXAMINATION
+              </th>
+            </tr>
+            <tr>
+              <th style="width: 200px;">WBC </th>
+              <th style="width: 170px;">{{data.wbc_count}} </th>
+              <th colspan="2">CRYTALS
+              </th>
+            </tr>
+            <tr>
+              <th>RBC </th>
+              <th> {{data.rbc_count}} </th>
+              <th style="width: 200px;">AMORPHOUS URATES </th>
+              <th> {{data.amorphous_urates}} </th>
+            </tr>
+            <tr>
+              <th colspan="2">EPITHELIAL CELL </th>
+              <th>AMORPHOUS PHOSPHATES</th>
+              <th>
+                {{data.amorphous_phosphates}}
+              </th>
+            </tr>
+            <tr>
+              <th>SQUAMOUS </th>
+              <th> {{data.squamous}} </th>
+              <th>URIC ACID </th>
+              <th> {{data.uric_acid}} </th>
+            </tr>
+            <tr>
+              <th>RENTAL TUBULAR </th>
+              <th> {{data.rental_tubular}} </th>
+              <th>CALCIUM OXALTE </th>
+              <th> {{data.calcium_oxalate}} </th>
+            </tr>
+            <tr>
+              <th>TRANSITIONAL </th>
+              <th> {{data.transitional}} </th>
+              <th>TRIPLE PHOSPHATE </th>
+              <th> {{data.triple_phosphate}} </th>
+            </tr>
+            <tr>
+              <th>BACTERIA </th>
+              <th> {{data.bacteria}} </th>
+              <th>CALCIUM CARBONATE </th>
+              <th> {{data.calcium_carbonate}} </th>
+            </tr>
+            <tr>
+              <th>YEAST </th>
+              <th> {{data.yeast}} </th>
+              <th>CALCIUM PHOSPHATE </th>
+              <th> {{data.calcium_phosphate}} </th>
+            </tr>
+            <tr>
+              <th>MUCUS THREADS </th>
+              <th> {{data.mucus_thread}} </th>
+              <th>AMMONIUM BIURATE </th>
+              <th> {{data.ammonium_biurate}} </th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+      <div style="margin-top: 20px;">
+        <table>
+          <thead>
+            <tr>
+              <th colspan="2" style="background: rgba(0, 0, 0, 0.2);">CAST </th>
+              <th colspan="2" rowspan="8" style="vertical-align: text-top;">
+                REMARKS :
+                {{data.remarks}}</th>
+            </tr>
+            <tr>
+              <th style="width: 200px;">HYALINE </th>
+              <th style="width: 170px;"> {{data.hyaline}} </th>
+            </tr>
+            <tr>
+              <th>FINE GRANULAR</th>
+              <th>{{data.fine_granular}}</th>
+            </tr>
+            <tr>
+              <th>COARSE GRANULAR</th>
+              <th>{{data.coarse_granular}}</th>
+            </tr>
+            <tr>
+              <th>RBC</th>
+              <th>{{data.cast_rbc}}</th>
+            </tr>
+            <tr>
+              <th>WBC</th>
+              <th>{{data.cast_wbc}}</th>
+            </tr>
+            <tr>
+              <th>WAXY</th>
+              <th>{{data.cast_waxy}}</th>
+            </tr>
+            <tr>
+              <th>BROAD</th>
+              <th>{{data.cast_broad}}</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>
