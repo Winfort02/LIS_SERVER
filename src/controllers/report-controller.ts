@@ -26,19 +26,11 @@ hbs.registerHelper("dateFormat", (value: Date, format: string) => {
 
 hbs.registerHelper("total", (hematology: Hematology) => {
   const getValue = (value: Decimal) => value.toNumber() || 0;
-  const {
-    neutrophil,
-    segmented,
-    stab,
-    lymphocyties,
-    monocyties,
-    eosinophils,
-    basophils,
-  } = hematology;
+  const { neutrophil, stab, lymphocyties, monocyties, eosinophils, basophils } =
+    hematology;
 
   return (
     getValue(neutrophil) +
-    getValue(segmented) +
     getValue(stab) +
     getValue(lymphocyties) +
     getValue(monocyties) +

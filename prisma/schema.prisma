@@ -57,13 +57,19 @@ model Hematology {
   rbc_count                       Decimal   @db.Decimal(10, 2)
   wbc_count                       Decimal   @db.Decimal(10, 2)
   platelet_count                  Decimal   @db.Decimal(10, 2)
+  mcv                             Decimal   @db.Decimal(10, 2)    @default(0.00)
+  mch                             Decimal   @db.Decimal(10, 2)    @default(0.00)
+  mchc                            Decimal   @db.Decimal(10, 2)    @default(0.00)
+  rdw_cv                          Decimal   @db.Decimal(10, 2)    @default(0.00)
+  mpv                             Decimal   @db.Decimal(10, 2)    @default(0.00)
+  pdw                             Decimal   @db.Decimal(10, 2)    @default(0.00)
   neutrophil                      Decimal   @db.Decimal(10, 2)
   segmented                       Decimal   @db.Decimal(10, 2)
-  stab                            Decimal   @db.Decimal(10, 2)
+  stab                            Decimal   @db.Decimal(10, 2)    @default(0.00)
   lymphocyties                    Decimal   @db.Decimal(10, 2)
   monocyties                      Decimal   @db.Decimal(10, 2)
   eosinophils                     Decimal   @db.Decimal(10, 2)
-  basophils                       Decimal   @db.Decimal(10, 2)
+  basophils                       Decimal   @db.Decimal(10, 2)    @default(0.00)
   createdAt                       DateTime  @default(now())
   remarks                         String    @db.Text
 
@@ -80,7 +86,13 @@ model Urinalysis {
   transparancy  String?
   ph            Decimal   @db.Decimal(10, 2)
   spec_gravity  Decimal   @db.Decimal(10, 2)
-  reduce_sugar  String?
+  leukocyte_esterase  String?
+  nitrite       String?
+  urobilinogen  String?
+  blood         String?
+  ketones       String?
+  bilirubin     String?
+  glucose       String?
   protein       String?
   wbc_count     Decimal   @db.Decimal(10, 2)
   rbc_count     Decimal   @db.Decimal(10, 2)

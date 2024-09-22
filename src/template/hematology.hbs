@@ -57,65 +57,110 @@
         <table>
           <thead>
             <tr>
-              <th style="width: 150px;">TEST REQUESTED</th>
+              <th style="width: 200px">TEST REQUESTED</th>
               <th colspan="3" style="text-align: center;"> CBC PLATELET</th>
             </tr>
             <tr>
-              <th style="width: 150px;"></th>
-              <th style="width: 300px;">
+              <th></th>
+              <th style="text-align: center; width: 100px">
                 RESULT</th>
-              <th style="width: 70px;">UNIT </th>
-              <th>NORMAL VALUES</th>
+              <th style="text-align:center; width: 70px;">UNIT </th>
+              <th style="text-align:center;">NORMAL VALUES</th>
             </tr>
             <tr>
-              <th style="width: 150px;" rowspan="2">HEMOGLOBIN </th>
-              <th style="width: 300px;" rowspan="2">
+              <th rowspan="2">HEMOGLOBIN </th>
+              <th style="text-align:center;" rowspan="2">
                 {{data.hemoglobin}}
               </th>
-              <th style="width: 70px;" rowspan="2"> g / L</th>
-              <th rowspan="1">M 130-180</th>
+              <th style="text-align:center;" rowspan="2"> g / L</th>
+              <th rowspan="1" style="text-align:center;">M 130-180</th>
             </tr>
             <tr>
-              <th rowspan="1">F 120-160</th>
+              <th rowspan="1" style="text-align:center;">F 120-160</th>
             </tr>
 
             <tr>
-              <th style="width: 150px;" rowspan="2">HEMATOCRIT </th>
-              <th style="width: 300px;" rowspan="2">
+              <th rowspan="2">HEMATOCRIT </th>
+              <th style="text-align:center;" rowspan="2">
                 {{data.hematocrit}}
               </th>
-              <th style="width: 70px;" rowspan="2"> L / L</th>
-              <th rowspan="1">M 0.40-0.54</th>
+              <th style="text-align:center;" rowspan="2"> L / L</th>
+              <th rowspan="1" style="text-align:center;">M 0.40-0.54</th>
             </tr>
             <tr>
-              <th rowspan="1">F 0.37-0.47</th>
+              <th rowspan="1" style="text-align:center;">F 0.37-0.47</th>
             </tr>
 
             <tr>
-              <th style="width: 150px;" rowspan="2">RBC COUNT </th>
-              <th style="width: 300px;" rowspan="2">
+              <th rowspan="2">RBC COUNT </th>
+              <th style="text-align:center;" rowspan="2">
                 {{data.rbc_count}}
               </th>
-              <th style="width: 70px;" rowspan="2"> x10 <sup>12</sup> / L</th>
-              <th rowspan="1">M 4.5-6.2</th>
+              <th style=" text-align:center;" rowspan="2">
+                x10
+                <sup>12</sup>
+                / L</th>
+              <th rowspan="1" style="text-align:center;">M 4.5-6.2</th>
             </tr>
             <tr>
-              <th rowspan="1">F 4.2-5.5</th>
+              <th rowspan="1" style="text-align:center;">F 4.2-5.5</th>
             </tr>
 
             <tr>
-              <th style="width: 150px;">WBC COUNT </th>
-              <th style="width: 300px;">
+              <th>WBC COUNT </th>
+              <th style="text-align:center;">
                 {{data.wbc_count}}</th>
-              <th style="width: 70px;">x10 <sup>9</sup> / L</th>
-              <th>4.5-10.0</th>
+              <th style="text-align:center;">x10 <sup>9</sup> / L</th>
+              <th style="text-align:center;">4.5-10.0</th>
             </tr>
             <tr>
-              <th style="width: 150px;">PLATELET COUNT </th>
-              <th style="width: 300px;">
+              <th>PLATELET COUNT </th>
+              <th style="text-align:center;">
                 {{data.platelet_count}}</th>
-              <th style="width: 70px;">x10 <sup>9</sup> / L</th>
-              <th>150-450</th>
+              <th style="text-align:center;">x10 <sup>9</sup> / L</th>
+              <th style="text-align:center;">150-450</th>
+            </tr>
+            <tr>
+              <th>MCV </th>
+              <th style="text-align:center;">
+                {{data.mcv}}</th>
+              <th style="text-align:center;">fl</th>
+              <th style="text-align:center;">80.0 - 96.0</th>
+            </tr>
+            <tr>
+              <th>MCH </th>
+              <th style="text-align:center;">
+                {{data.mch}}</th>
+              <th style="text-align:center;">pg</th>
+              <th style="text-align:center;">26.0 - 33.0</th>
+            </tr>
+            <tr>
+              <th>MCHC </th>
+              <th style="text-align:center;">
+                {{data.mchc}}</th>
+              <th style="text-align:center;">g / dl</th>
+              <th style="text-align:center;">32.0 - 38.0</th>
+            </tr>
+            <tr>
+              <th>RDW-CV </th>
+              <th style="text-align:center;">
+                {{data.rdw_cv}}</th>
+              <th style="text-align:center;">%</th>
+              <th style="text-align:center;">11.8 - 14.5</th>
+            </tr>
+            <tr>
+              <th>MPV </th>
+              <th style="text-align:center;">
+                {{data.mpv}}</th>
+              <th style="text-align:center;">fl</th>
+              <th style="text-align:center;">7.5 - 11.5</th>
+            </tr>
+            <tr>
+              <th>PDW </th>
+              <th style="text-align:center;">
+                {{data.pdw}}</th>
+              <th style="text-align:center;">fl</th>
+              <th style="text-align:center;">9.0 - 17.0</th>
             </tr>
           </thead>
         </table>
@@ -127,74 +172,99 @@
         <table>
           <thead>
             <tr>
-              <th style="width: 150px;">NEUTROPHIL </th>
-              <th style="width: 300px;">
+              <th style="width: 200px;">NEUTROPHIL </th>
+              <th style="text-align: center; width: 100px">
                 {{data.neutrophil}}
               </th>
-              <th style="width: 70px;"> %</th>
-              <th>55-65</th>
+              <th style="width: 70px; text-align: center"> %</th>
+              <th style="text-align: center">55-65</th>
             </tr>
 
             <tr>
-              <th style="width: 150px;">SEGMENTED </th>
-              <th style="width: 300px;">
+              <th>SEGMENTED </th>
+              <th style="text-align: center">
                 {{data.segmented}}
               </th>
-              <th style="width: 70px;"> %</th>
-              <th>50-60</th>
+              <th style="text-align: center"> %</th>
+              <th style="text-align: center">50-60</th>
             </tr>
 
             <tr>
-              <th style="width: 150px;">STAB </th>
-              <th style="width: 300px;">
+              <th>STAB </th>
+              <th style="text-align: center">
                 {{data.stab}}
               </th>
-              <th style="width: 70px;"> %</th>
-              <th>0-5</th>
+              <th style="text-align: center"> %</th>
+              <th style="text-align: center">0-5</th>
             </tr>
 
             <tr>
-              <th style="width: 150px;">LYMPHOCYTIES </th>
-              <th style="width: 300px;">
+              <th>LYMPHOCYTIES </th>
+              <th style="text-align: center">
                 {{data.lymphocyties}}</th>
-              <th style="width: 70px;">%</th>
-              <th>25-35</th>
+              <th style="text-align: center">%</th>
+              <th style="text-align: center">25-35</th>
             </tr>
             <tr>
-              <th style="width: 150px;">MONOCYTIES </th>
-              <th style="width: 300px;">
+              <th>MONOCYTIES </th>
+              <th style="text-align: center">
                 {{data.monocyties}}</th>
-              <th style="width: 70px;">%</th>
-              <th>4-8</th>
+              <th style="text-align: center">%</th>
+              <th style="text-align: center">4-8</th>
             </tr>
             <tr>
-              <th style="width: 150px;">EOSINOPHILS </th>
-              <th style="width: 300px;">
+              <th>EOSINOPHILS </th>
+              <th style="text-align: center">
                 {{data.eosinophils}}</th>
-              <th style="width: 70px;">%</th>
-              <th>1-3</th>
+              <th style="text-align: center">%</th>
+              <th style="text-align: center">1-3</th>
             </tr>
             <tr>
-              <th style="width: 150px;">BASOPHILS </th>
-              <th style="width: 300px;">
+              <th>BASOPHILS </th>
+              <th style="text-align: center">
                 {{data.basophils}}</th>
-              <th style="width: 70px;">%</th>
-              <th>0-1</th>
+              <th style="text-align: center">%</th>
+              <th style="text-align: center">0-1</th>
             </tr>
             <tr>
-              <th style="width: 150px;">TOTAL </th>
-              <th style="width: 300px;">
+              <th>TOTAL </th>
+              <th style="text-align: center">
                 {{total data}}</th>
-              <th style="width: 70px;">%</th>
+              <th style="text-align: center">%</th>
               <th></th>
             </tr>
             <tr>
-              <th style="width: 150px;" rowspan="2">REMARKS </th>
-              <th colspan="3" style="text-align: center;" rowspan="1">BLOOD
-                TYPING</th>
+              <th rowspan="6" style="vertical-align: text-top;">REMARKS
+                <br />
+                <p style="text-align: center;">{{data.remarks}}</p>
+              </th>
+              <th colspan="1">MCV</th>
+              <th colspan="2" style="text-align: center;">MEAN CORPUSCULAR
+                VOLUME</th>
             </tr>
             <tr>
-              <th colspan="3" style="text-align: center;"> {{data.remarks}}</th>
+              <th colspan="1">MCH</th>
+              <th colspan="2" style="text-align: center;">MEAN CORPUSCULAR
+                HEMOGLOBIN</th>
+            </tr>
+            <tr>
+              <th colspan="1">MCHC</th>
+              <th colspan="2" style="text-align: center;">MEAN CORPUSCULAR
+                HEMOGLOBIN CONCENTRATION</th>
+            </tr>
+            <tr>
+              <th colspan="1">RDW-CV</th>
+              <th colspan="2" style="text-align: center;">RED BLOOD CELL
+                DISTRIBUTION WIDTH (CV)</th>
+            </tr>
+            <tr>
+              <th colspan="1">MPV</th>
+              <th colspan="2" style="text-align: center;">MEAN PLATELET VOLUME</th>
+            </tr>
+            <tr>
+              <th colspan="1">PDW</th>
+              <th colspan="2" style="text-align: center;">PLATELET DISTRIBUTION
+                WIDTH</th>
             </tr>
           </thead>
         </table>

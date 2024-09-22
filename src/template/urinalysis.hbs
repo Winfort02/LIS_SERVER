@@ -53,7 +53,7 @@
       <div class="sub-title">
         <h4>URINALYSIS</h4>
       </div>
-      <div style="margin-top: 20px;">
+      <div style="margin-top: 5px">
         <table>
           <thead>
             <tr>
@@ -62,41 +62,72 @@
                 style="text-align: center; width: 70px; background: rgba(0, 0, 0, 0.2);"
               >PHYSICAL PROPERTIES
               </th>
-              <th
-                colspan="2"
-                style="text-align: center; background: rgba(0, 0, 0, 0.2);"
-              > CHEMICAL TEST</th>
             </tr>
             <tr>
               <th style="width: 200px;">COLOR </th>
-              <th>{{data.color}} </th>
-              <th rowspan="2" style="width: 150px; text-align: center">REDUCING
-                SUGAR
-              </th>
-              <th rowspan="2" style="text-align: center">
-                {{data.reduce_sugar}}
-              </th>
+              <th>{{data.color}}</th>
             </tr>
             <tr>
               <th>TRANSPARENCY </th>
               <th> {{data.transparancy}} </th>
             </tr>
+          </thead>
+        </table>
+      </div>
+      <div style="margin-top: 5px;">
+        <table>
+          <thead>
+            <tr>
+              <th
+                colspan="2"
+                style="text-align: center; width: 70px; background: rgba(0, 0, 0, 0.2);"
+              >CHEMICAL TEST
+              </th>
+            </tr>
+            <tr>
+              <th style="width: 200px;">LEUKOCYTE ESTERASE </th>
+              <th>{{data.leukocyte_esterase}}</th>
+            </tr>
+            <tr>
+              <th>NITRITE </th>
+              <th> {{data.nitrite}} </th>
+            </tr>
+            <tr>
+              <th>UROBILINOGEN </th>
+              <th> {{data.urobilinogen}} </th>
+            </tr>
+            <tr>
+              <th>PROTEIN </th>
+              <th> {{data.protein}} </th>
+            </tr>
             <tr>
               <th>PH </th>
-              <th>{{data.ph}} </th>
-              <th rowspan="2" style="text-align: center">PROTEIN</th>
-              <th rowspan="2" style="text-align: center">
-                {{data.protein}}
-              </th>
+              <th> {{data.ph}} </th>
+            </tr>
+            <tr>
+              <th>BLOOD </th>
+              <th> {{data.blood}} </th>
             </tr>
             <tr>
               <th>SPECIFIC GRAVITY </th>
               <th> {{data.spec_gravity}} </th>
             </tr>
+            <tr>
+              <th>KETONES </th>
+              <th> {{data.ketones}} </th>
+            </tr>
+            <tr>
+              <th>BILIRUBIN </th>
+              <th> {{data.bilirubin}} </th>
+            </tr>
+            <tr>
+              <th>GLUCOSE </th>
+              <th> {{data.glucose}} </th>
+            </tr>
           </thead>
         </table>
       </div>
-      <div style="margin-top: 20px;">
+      <div style="margin-top: 10px;">
         <table>
           <thead>
             <tr>
@@ -120,7 +151,10 @@
               <th> {{data.amorphous_urates}} </th>
             </tr>
             <tr>
-              <th colspan="2">EPITHELIAL CELL </th>
+              <th
+                colspan="2"
+                style="background: rgba(0, 0, 0, 0.2); "
+              >EPITHELIAL CELL </th>
               <th>AMORPHOUS PHOSPHATES</th>
               <th>
                 {{data.amorphous_phosphates}}
@@ -165,11 +199,11 @@
           </thead>
         </table>
       </div>
-      <div style="margin-top: 20px;">
+      <div style="margin-top: 10px;">
         <table>
           <thead>
             <tr>
-              <th colspan="2" style="background: rgba(0, 0, 0, 0.2);">CAST </th>
+              <th colspan="2" style="background: #00000033;">CAST </th>
               <th colspan="2" rowspan="8" style="vertical-align: text-top;">
                 REMARKS :
                 {{data.remarks}}</th>
