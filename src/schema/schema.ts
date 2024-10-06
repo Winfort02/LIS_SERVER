@@ -18,7 +18,7 @@ export const patientSchema = z.object({
 });
 
 export const hemotologySchema = z.object({
-  patient_id: z.number(),
+  test_id: z.number(),
   physician: z.string(),
   lab_no: z.string(),
   hemoglobin: z.number().multipleOf(0.01),
@@ -37,7 +37,7 @@ export const hemotologySchema = z.object({
 });
 
 export const urinalysisSchema = z.object({
-  patient_id: z.number(),
+  test_id: z.number(),
   physician: z.string(),
   lab_no: z.string(),
   ph: z.number().multipleOf(0.01),
@@ -46,4 +46,9 @@ export const urinalysisSchema = z.object({
   rbc_count: z.number().multipleOf(0.01),
   cast_rbc: z.number().multipleOf(0.01),
   cast_wbc: z.number().multipleOf(0.01),
+});
+
+export const testSchema = z.object({
+  patient_id: z.number(),
+  type: z.string(),
 });

@@ -74,8 +74,8 @@ export const GetAllUrinalysis = async (req: Request, res: Response) => {
   const urinalysis: Urinalysis[] = await prismaClient.urinalysis.findMany(
     PaginationWithSingleRelation({
       keywords,
-      relation: "patient",
-      searchProperty: "last_name",
+      relation: "test",
+      searchProperty: "transaction_number",
       skip: offset,
       take: pageSize,
       orderByProperty: "id",
@@ -83,7 +83,7 @@ export const GetAllUrinalysis = async (req: Request, res: Response) => {
     })
   );
   const totalPages = await prismaClient.urinalysis.count(
-    CountSingleRelationQuery(keywords, "patient", "last_name")
+    CountSingleRelationQuery(keywords, "test", "transaction_number")
   );
   const paginate = pagination(
     page,
@@ -105,7 +105,7 @@ export const GetUrinalysisById = async (req: Request, res: Response) => {
   const urinalysis = await prismaClient.urinalysis.findUnique({
     where: { id },
     include: {
-      patient: true,
+      test: true,
     },
   });
 

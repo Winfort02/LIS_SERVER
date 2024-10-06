@@ -55,7 +55,11 @@ export const GenerateHematologyPDF = async (req: Request, res: Response) => {
   const hematology = await prismaClient.hematology.findUnique({
     where: { id },
     include: {
-      patient: true,
+      test: {
+        include: {
+          patient: true,
+        },
+      },
     },
   });
   if (!hematology) {
@@ -86,7 +90,7 @@ export const GenerateUrinalysisPDF = async (req: Request, res: Response) => {
   const urinalysis = await prismaClient.urinalysis.findUnique({
     where: { id },
     include: {
-      patient: true,
+      test: true,
     },
   });
   if (!urinalysis) {

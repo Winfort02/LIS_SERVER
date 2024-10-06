@@ -23,5 +23,12 @@ export const HematologyErrorMessage = {
 };
 
 export const UrinalysisErrorMerssage = {
-  NotFound: "Urinalysis not found. Please try again !"
-}
+  NotFound: "Urinalysis not found. Please try again !",
+};
+
+export const TestErrorMessage = {
+  NotFound: "Test not found !",
+  InvalidTransactionNo: "Invalid transaction number !",
+  NotAbleToUpdate:
+    "Unable to update test details as there's a current test record base on the current type",
+};

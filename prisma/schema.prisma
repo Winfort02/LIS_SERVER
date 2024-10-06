@@ -39,17 +39,27 @@ model Patient {
   sex                  String
   address              String                 @db.Text
   civil_status         String
-  hematologies         Hematology[]
-  urinalysis           Urinalysis[]
+  test                 Test[]
   createdAt            DateTime               @default(now())
-
   @@map("patients")
+}
+
+model Test {
+  id                    Int         @id @default(autoincrement())
+  patient_id            Int   
+  patient               Patient     @relation(fields: [patient_id], references: [id])
+  transaction_number    String      @unique
+  type                  String
+  createdAt             DateTime    @default(now())
+  hematology            Hematology?
+  urinalysis            Urinalysis?
+  @@map("tests")
 }
 
 model Hematology {
   id                              Int       @id @default(autoincrement())
-  patient_id                      Int    
-  patient                         Patient   @relation(fields: [patient_id], references: [id])   
+  test_id                         Int       @unique
+  test                            Test     @relation(fields: [test_id], references: [id])
   physician                       String
   lab_no                          String
   hemoglobin                      Decimal   @db.Decimal(10, 2)
@@ -78,8 +88,8 @@ model Hematology {
 
 model Urinalysis {
   id            Int       @id @default(autoincrement())
-  patient_id    Int
-  patient       Patient   @relation(fields: [patient_id], references: [id])
+  test_id       Int       @unique
+  test          Test     @relation(fields: [test_id], references: [id])
   physician     String
   lab_no        String
   color         String?

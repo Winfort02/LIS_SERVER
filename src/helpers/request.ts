@@ -1,5 +1,6 @@
-import { Hematology, Patient, Urinalysis } from "@prisma/client";
+import { Hematology, Patient, Test, Urinalysis } from "@prisma/client";
 import { Request } from "express";
+import { GenerateTransactionNo } from "../service/test.service.";
 
 export const PatientRequest = (request: Request) => {
   return {
@@ -16,7 +17,7 @@ export const PatientRequest = (request: Request) => {
 
 export const HematologyRequest = (request: Request) => {
   return {
-    patient_id: request.body.patient_id,
+    test_id: request.body.test_id,
     physician: request.body.physician,
     lab_no: request.body.lab_no,
     hemoglobin: request.body.hemoglobin,
@@ -43,7 +44,7 @@ export const HematologyRequest = (request: Request) => {
 
 export const UrinalysisRequest = (request: Request) => {
   return {
-    patient_id: request.body.patient_id,
+    test_id: request.body.test_id,
     physician: request.body.physician,
     lab_no: request.body.lab_no,
     color: request.body.color,
@@ -83,4 +84,12 @@ export const UrinalysisRequest = (request: Request) => {
     cast_broad: request.body.cast_broad,
     remarks: request.body.remarks,
   } as Urinalysis;
+};
+
+export const TestRequest = async (request: Request) => {
+  return {
+    patient_id: request.body.patient_id,
+    type: request.body.type,
+    transaction_number: await GenerateTransactionNo(),
+  } as Test;
 };

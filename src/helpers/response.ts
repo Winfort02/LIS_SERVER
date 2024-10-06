@@ -74,6 +74,7 @@ export class Mapper {
   }
 
   SingleHematologyResponse(response: Hematology) {
+    if (!response) return null;
     return {
       ...response,
       basophils: response.basophils.toNumber(),
@@ -88,6 +89,12 @@ export class Mapper {
       lymphocyties: response.lymphocyties.toNumber(),
       monocyties: response.monocyties.toNumber(),
       eosinophils: response.eosinophils.toNumber(),
+      mcv: response.mcv.toNumber(),
+      mch: response.mch.toNumber(),
+      mchc: response.mchc.toNumber(),
+      rdw_cv: response.rdw_cv.toNumber(),
+      mpv: response.mpv.toNumber(),
+      pdw: response.pdw.toNumber(),
     };
   }
 
