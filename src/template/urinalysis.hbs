@@ -27,16 +27,16 @@
             <tr>
               <th style="width: 150px;">PATIENT NAME: </th>
               <th style="width: 300px;">
-                {{data.patient.last_name}}
-                {{data.patient.first_name}},
-                {{data.patient.middle_name}}</th>
+                {{data.test.patient.last_name}}
+                {{data.test.patient.first_name}},
+                {{data.test.patient.middle_name}}</th>
               <th style="width: 70px;">SEX: </th>
-              <th>{{data.patient.sex}}</th>
+              <th>{{data.test.patient.sex}}</th>
             </tr>
             <tr>
               <th style="width: 150px;">ADDRESS: </th>
               <th style="width: 300px;">
-                {{data.patient.address}}</th>
+                {{data.test.patient.address}}</th>
               <th style="width: 70px;">Date: </th>
               <th>{{dateFormat data.createdAt "LLL"}}</th>
             </tr>

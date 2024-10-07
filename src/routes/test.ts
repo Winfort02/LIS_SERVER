@@ -4,6 +4,7 @@ import { ControllerHandler } from "../helpers/controller-handler";
 import {
   CreateTest,
   DeletteTest,
+  GetPatientTestHistory,
   GetTestById,
   GetTestByTransactionNo,
   GetTestRecords,
@@ -30,6 +31,12 @@ testRouter.get(
   "/transaction/:transaction_number",
   [AuthenticationMiddleWare],
   ControllerHandler(GetTestByTransactionNo)
+);
+
+testRouter.get(
+  "/test-history/:patient_id",
+  [AuthenticationMiddleWare],
+  ControllerHandler(GetPatientTestHistory)
 );
 
 testRouter.put(

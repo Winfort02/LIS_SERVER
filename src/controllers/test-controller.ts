@@ -8,13 +8,14 @@ import { TestErrorMessage } from "../helpers/error-messages";
 import {
   CreateTestRecord,
   DeleteTestRecord,
+  GetPatientTest,
   GetTestDetail,
   GetTestPaginate,
   GetTransactionNoDetails,
   UpdateTestRecord,
   ValidateTestRecord,
 } from "../service/test.service.";
-import { Hematology, Test } from "@prisma/client";
+import { Hematology, Test, Urinalysis } from "@prisma/client";
 
 const mapper = new Mapper();
 
@@ -79,6 +80,7 @@ export const GetTestByTransactionNo = async (req: Request, res: Response) => {
   const response = {
     ...test,
     hematology: mapper.SingleHematologyResponse(test?.hematology as Hematology),
+    urinalysis: mapper.SingleUrinalysisResponse(test?.urinalysis as Urinalysis),
   };
   return res.json(new SuccessReponse(response, SuccessCode.OK, true));
 };
@@ -119,4 +121,26 @@ export const DeletteTest = async (req: Request, res: Response) => {
   const id = parseInt(req.params.id, 10);
   await DeleteTestRecord(id);
   return res.json(new SuccessReponse(null, SuccessCode.NO_CONTENT, true));
+};
+
+/**
+ * Method to delete test record
+ * @param req
+ * @param res
+ * @returns JSON Response object
+ */
+export const GetPatientTestHistory = async (req: Request, res: Response) => {
+  const patientId = parseInt(req.params.patient_id, 10);
+  const page = parseInt(req.query.page as string) || 1;
+  const pageSize = parseInt(req.query.size as string) || 25;
+  const keywords = (req.query.keywords as string) || "";
+  const offset = (page - 1) * pageSize;
+  const tests = await GetPatientTest(
+    patientId,
+    keywords,
+    page,
+    offset,
+    pageSize
+  );
+  return res.json(new SuccessReponse(tests, SuccessCode.OK, true));
 };

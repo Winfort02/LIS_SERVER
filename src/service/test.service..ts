@@ -2,8 +2,10 @@ import { Test } from "@prisma/client";
 import { prismaClient } from "..";
 import { ServerError } from "../exceptions/request";
 import {
+  CountQuery,
   CountSingleRelationQuery,
   pagination,
+  PaginationQueryById,
   PaginationWithSingleRelation,
 } from "../helpers/common";
 
@@ -23,6 +25,7 @@ export const GetTransactionNoDetails = async (transactionNo: string) => {
       include: {
         patient: true,
         hematology: true,
+        urinalysis: true,
       },
     });
   } catch (error) {
@@ -103,19 +106,57 @@ export const GetTestPaginate = async (
   pageSize: number
 ) => {
   try {
-    const test = await prismaClient.test.findMany(
-      PaginationWithSingleRelation({
+    const test = await prismaClient.test.findMany({
+      ...PaginationWithSingleRelation({
         keywords,
         relation: "patient",
         searchProperty: "last_name",
         skip: offset,
         take: pageSize,
         orderByProperty: "id",
-        orderBy: "asc",
-      })
-    );
+        orderBy: "desc",
+      }),
+      include: {
+        patient: true,
+        hematology: true,
+        urinalysis: true,
+      },
+    });
     const totalPages = await prismaClient.test.count(
       CountSingleRelationQuery(keywords, "patient", "last_name")
+    );
+    return pagination(page, pageSize, totalPages, test);
+  } catch (error) {
+    throw new ServerError(error);
+  }
+};
+
+export const GetPatientTest = async (
+  patient_id: number,
+  keywords: string,
+  page: number,
+  offset: number,
+  pageSize: number
+) => {
+  try {
+    const test = await prismaClient.test.findMany({
+      ...PaginationQueryById(
+        keywords,
+        "transaction_number",
+        offset,
+        pageSize,
+        "transaction_number",
+        "desc",
+        "patient_id",
+        patient_id
+      ),
+      include: {
+        hematology: true,
+        urinalysis: true,
+      },
+    });
+    const totalPages = await prismaClient.test.count(
+      CountQuery(keywords, "transaction_number")
     );
     return pagination(page, pageSize, totalPages, test);
   } catch (error) {

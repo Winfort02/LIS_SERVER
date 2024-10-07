@@ -90,3 +90,28 @@ export const PaginationQuery = (
     },
   };
 };
+
+export const PaginationQueryById = (
+  keywords: string,
+  searchProperty: string,
+  skip: number,
+  take: number,
+  orderByProperty: string,
+  orderBy: string,
+  propertId: string,
+  id: number
+) => {
+  return {
+    where: {
+      [propertId]: id,
+      [searchProperty]: {
+        contains: keywords,
+      },
+    },
+    skip,
+    take,
+    orderBy: {
+      [orderByProperty]: orderBy,
+    },
+  };
+};

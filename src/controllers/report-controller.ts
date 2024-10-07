@@ -90,7 +90,11 @@ export const GenerateUrinalysisPDF = async (req: Request, res: Response) => {
   const urinalysis = await prismaClient.urinalysis.findUnique({
     where: { id },
     include: {
-      test: true,
+      test: {
+        include: {
+          patient: true,
+        },
+      },
     },
   });
   if (!urinalysis) {

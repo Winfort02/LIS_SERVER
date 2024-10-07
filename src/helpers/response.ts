@@ -99,6 +99,7 @@ export class Mapper {
   }
 
   SingleUrinalysisResponse(response: Urinalysis) {
+    if (!response) return null;
     return {
       ...response,
       ph: response.ph.toNumber(),
