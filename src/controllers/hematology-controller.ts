@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { hemotologySchema } from "../schema/schema";
-import { HematologyRequest } from "../helpers/request";
+import { HematologyRequest, PaginationRequest } from "../helpers/request";
 import { prismaClient } from "..";
 import { Mapper, SuccessReponse } from "../helpers/response";
 import { ErrorCode, SuccessCode } from "../exceptions/generic";
@@ -66,10 +66,7 @@ export const DeleteHematology = async (req: Request, res: Response) => {
  * @returns JSON Response object
  */
 export const GetAllHematology = async (req: Request, res: Response) => {
-  const page = parseInt(req.query.page as string) || 1;
-  const pageSize = parseInt(req.query.size as string) || 25;
-  const keywords = (req.query.keywords as string) || "";
-  const offset = (page - 1) * pageSize;
+  const { page, pageSize, keywords, offset } = PaginationRequest(req);
   const hemotology: Hematology[] = await prismaClient.hematology.findMany(
     PaginationWithSingleRelation({
       keywords,

@@ -1,11 +1,15 @@
-import { User } from "@prisma/client";
-import { prismaClient } from "..";
 import { ErrorCode, SuccessCode } from "../exceptions/generic";
 import { SuccessReponse, UserResponse } from "../helpers/response";
 import { Request, Response } from "express";
 import { NotFound } from "../exceptions/request";
 import { UserErrorMessage } from "../helpers/error-messages";
-import { CountQuery, pagination, PaginationQuery } from "../helpers/common";
+import { PaginationRequest } from "../helpers/request";
+import {
+  DeleteUserAsync,
+  GetUserByIdAsync,
+  GetUserListAsync,
+  UpdateUserAsync,
+} from "../service/user.service";
 
 /**
  * Method to get all the users from the database
@@ -14,19 +18,9 @@ import { CountQuery, pagination, PaginationQuery } from "../helpers/common";
  * @returns JSON Object
  */
 export const GetAllUsers = async (req: Request, res: Response) => {
-  const page = parseInt(req.query.page as string) || 1;
-  const pageSize = parseInt(req.query.size as string) || 25;
-  const keywords = (req.query.keywords as string) || "";
-  const offset = (page - 1) * pageSize;
-  const users = await prismaClient.user.findMany(
-    PaginationQuery(keywords, "name", offset, pageSize, "id", "asc")
-  );
-  const totalPages = await prismaClient.user.count(
-    CountQuery(keywords, "name")
-  );
-  const userResponse = users.map((item: User) => new UserResponse(item));
-  const paginate = pagination(page, pageSize, totalPages, userResponse);
-  return res.json(new SuccessReponse(paginate, SuccessCode.OK, true));
+  const { keywords, page, offset, pageSize } = PaginationRequest(req);
+  const users = await GetUserListAsync(keywords, page, offset, pageSize);
+  return res.json(new SuccessReponse(users, SuccessCode.OK, true));
 };
 
 /**
@@ -37,7 +31,7 @@ export const GetAllUsers = async (req: Request, res: Response) => {
  */
 export const GetUserById = async (req: Request, res: Response) => {
   const id = parseInt(req.params.id, 10);
-  const user = await prismaClient.user.findUnique({ where: { id } });
+  const user = await GetUserByIdAsync(id);
   if (!user) {
     throw new NotFound(UserErrorMessage.notFound, ErrorCode.NOT_FOUND);
   }
@@ -54,11 +48,7 @@ export const GetUserById = async (req: Request, res: Response) => {
  */
 export const UpdateUser = async (req: Request, res: Response) => {
   const id = parseInt(req.params.id, 10);
-  const { name, email } = req.body;
-  const updatedUser = await prismaClient.user.update({
-    where: { id },
-    data: { name, email },
-  });
+  const updatedUser = await UpdateUserAsync(id, req);
   return res.json(
     new SuccessReponse(new UserResponse(updatedUser), SuccessCode.UPDATED, true)
   );
@@ -72,6 +62,6 @@ export const UpdateUser = async (req: Request, res: Response) => {
  */
 export const DeleteUser = async (req: Request, res: Response) => {
   const id = parseInt(req.params.id, 10);
-  await prismaClient.user.delete({ where: { id } });
+  await DeleteUserAsync(id);
   return res.json(new SuccessReponse(null, SuccessCode.NO_CONTENT, true));
 };

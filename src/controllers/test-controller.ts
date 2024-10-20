@@ -8,6 +8,7 @@ import { TestErrorMessage } from "../helpers/error-messages";
 import {
   CreateTestRecord,
   DeleteTestRecord,
+  GetAllTest,
   GetPatientTest,
   GetTestDetail,
   GetTestPaginate,
@@ -15,12 +16,12 @@ import {
   UpdateTestRecord,
   ValidateTestRecord,
 } from "../service/test.service.";
-import { Hematology, Test, Urinalysis } from "@prisma/client";
+import { Chemistry, Hematology, Test, Urinalysis } from "@prisma/client";
 
 const mapper = new Mapper();
 
 /**
- * Method to create test
+ * Method to get test records
  * @param req
  * @param res
  * @returns JSON Response object - pagination
@@ -81,6 +82,7 @@ export const GetTestByTransactionNo = async (req: Request, res: Response) => {
     ...test,
     hematology: mapper.SingleHematologyResponse(test?.hematology as Hematology),
     urinalysis: mapper.SingleUrinalysisResponse(test?.urinalysis as Urinalysis),
+    chemistry: mapper.SingleChemistryResponse(test?.chemistry as Chemistry),
   };
   return res.json(new SuccessReponse(response, SuccessCode.OK, true));
 };
@@ -142,5 +144,16 @@ export const GetPatientTestHistory = async (req: Request, res: Response) => {
     offset,
     pageSize
   );
+  return res.json(new SuccessReponse(tests, SuccessCode.OK, true));
+};
+
+/**
+ * Method to delete test record
+ * @param req
+ * @param res
+ * @returns JSON Response object
+ */
+export const GetAllTestAsync = async (req: Request, res: Response) => {
+  const tests = await GetAllTest();
   return res.json(new SuccessReponse(tests, SuccessCode.OK, true));
 };

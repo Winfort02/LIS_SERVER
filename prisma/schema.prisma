@@ -18,117 +18,206 @@ enum Role {
   USER
 }
 
+enum StockType {
+  STOCK_IN
+  STOCK_OUT
+}
+
 model User {
-  id        Int        @id @default(autoincrement())
-  name      String
-  email     String     @unique
-  password  String
-  role      Role       @default(USER)
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  id          Int        @id @default(autoincrement())
+  name        String
+  email       String     @unique
+  password    String
+  role        Role       @default(USER)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  stock       Stock[]
   @@map("users")
 }
 
 model Patient {
-  id                   Int                    @id @default(autoincrement())
-  last_name            String
-  first_name           String
-  middle_name          String
-  contact_number       String
-  date_of_birth        DateTime               @db.Date
-  sex                  String
-  address              String                 @db.Text
-  civil_status         String
-  test                 Test[]
-  createdAt            DateTime               @default(now())
+  id             Int      @id @default(autoincrement())
+  last_name      String
+  first_name     String
+  middle_name    String
+  contact_number String
+  date_of_birth  DateTime @db.Date
+  sex            String
+  address        String   @db.Text
+  civil_status   String
+  test           Test[]
+  createdAt      DateTime @default(now())
+
   @@map("patients")
 }
 
 model Test {
-  id                    Int         @id @default(autoincrement())
-  patient_id            Int   
-  patient               Patient     @relation(fields: [patient_id], references: [id])
-  transaction_number    String      @unique
-  type                  String
-  createdAt             DateTime    @default(now())
-  hematology            Hematology?
-  urinalysis            Urinalysis?
+  id                 Int         @id @default(autoincrement())
+  patient_id         Int
+  patient            Patient     @relation(fields: [patient_id], references: [id])
+  transaction_number String      @unique
+  type               String
+  createdAt          DateTime    @default(now())
+  hematology         Hematology?
+  urinalysis         Urinalysis?
+  stock_out          StockOut[]
+  chemistry          Chemistry?
+
   @@map("tests")
 }
 
 model Hematology {
-  id                              Int       @id @default(autoincrement())
-  test_id                         Int       @unique
-  test                            Test     @relation(fields: [test_id], references: [id])
-  physician                       String
-  lab_no                          String
-  hemoglobin                      Decimal   @db.Decimal(10, 2)
-  hematocrit                      Decimal   @db.Decimal(10, 2)
-  rbc_count                       Decimal   @db.Decimal(10, 2)
-  wbc_count                       Decimal   @db.Decimal(10, 2)
-  platelet_count                  Decimal   @db.Decimal(10, 2)
-  mcv                             Decimal   @db.Decimal(10, 2)    @default(0.00)
-  mch                             Decimal   @db.Decimal(10, 2)    @default(0.00)
-  mchc                            Decimal   @db.Decimal(10, 2)    @default(0.00)
-  rdw_cv                          Decimal   @db.Decimal(10, 2)    @default(0.00)
-  mpv                             Decimal   @db.Decimal(10, 2)    @default(0.00)
-  pdw                             Decimal   @db.Decimal(10, 2)    @default(0.00)
-  neutrophil                      Decimal   @db.Decimal(10, 2)
-  segmented                       Decimal   @db.Decimal(10, 2)
-  stab                            Decimal   @db.Decimal(10, 2)    @default(0.00)
-  lymphocyties                    Decimal   @db.Decimal(10, 2)
-  monocyties                      Decimal   @db.Decimal(10, 2)
-  eosinophils                     Decimal   @db.Decimal(10, 2)
-  basophils                       Decimal   @db.Decimal(10, 2)    @default(0.00)
-  createdAt                       DateTime  @default(now())
-  remarks                         String    @db.Text
+  id             Int      @id @default(autoincrement())
+  test_id        Int      @unique
+  test           Test     @relation(fields: [test_id], references: [id])
+  physician      String
+  lab_no         String
+  hemoglobin     Decimal  @db.Decimal(10, 2)
+  hematocrit     Decimal  @db.Decimal(10, 2)
+  rbc_count      Decimal  @db.Decimal(10, 2)
+  wbc_count      Decimal  @db.Decimal(10, 2)
+  platelet_count Decimal  @db.Decimal(10, 2)
+  mcv            Decimal  @default(0.00) @db.Decimal(10, 2)
+  mch            Decimal  @default(0.00) @db.Decimal(10, 2)
+  mchc           Decimal  @default(0.00) @db.Decimal(10, 2)
+  rdw_cv         Decimal  @default(0.00) @db.Decimal(10, 2)
+  mpv            Decimal  @default(0.00) @db.Decimal(10, 2)
+  pdw            Decimal  @default(0.00) @db.Decimal(10, 2)
+  neutrophil     Decimal  @db.Decimal(10, 2)
+  segmented      Decimal  @db.Decimal(10, 2)
+  stab           Decimal  @default(0.00) @db.Decimal(10, 2)
+  lymphocyties   Decimal  @db.Decimal(10, 2)
+  monocyties     Decimal  @db.Decimal(10, 2)
+  eosinophils    Decimal  @db.Decimal(10, 2)
+  basophils      Decimal  @default(0.00) @db.Decimal(10, 2)
+  createdAt      DateTime @default(now())
+  remarks        String   @db.Text
 
   @@map("hematology")
 }
 
 model Urinalysis {
-  id            Int       @id @default(autoincrement())
-  test_id       Int       @unique
-  test          Test     @relation(fields: [test_id], references: [id])
-  physician     String
-  lab_no        String
-  color         String?
-  transparancy  String?
-  ph            Decimal   @db.Decimal(10, 2)
-  spec_gravity  Decimal   @db.Decimal(10, 2)
-  leukocyte_esterase  String?
-  nitrite       String?
-  urobilinogen  String?
-  blood         String?
-  ketones       String?
-  bilirubin     String?
-  glucose       String?
-  protein       String?
-  wbc_count     Decimal   @db.Decimal(10, 2)
-  rbc_count     Decimal   @db.Decimal(10, 2)
-  squamous      String?
-  rental_tubular  String?
-  transitional    String?
-  bacteria        String?
-  yeast           String?
-  mucus_thread    String?
-  amorphous_urates  String?
-  amorphous_phosphates  String?
-  uric_acid     String?
-  calcium_oxalate   String?
-  triple_phosphate  String?
-  calcium_carbonate String?
-  calcium_phosphate String?
-  ammonium_biurate  String?
-  hyaline       String?
-  fine_granular String?
-  coarse_granular String?
-  cast_rbc      Decimal   @db.Decimal(10, 2)
-  cast_wbc      Decimal   @db.Decimal(10, 2)
-  cast_waxy     String?
-  cast_broad    String?
-  createdAt     DateTime  @default(now())
-  remarks       String?   @db.Text
+  id                   Int      @id @default(autoincrement())
+  test_id              Int      @unique
+  test                 Test     @relation(fields: [test_id], references: [id])
+  physician            String
+  lab_no               String
+  color                String?
+  transparancy         String?
+  ph                   Decimal  @db.Decimal(10, 2)
+  spec_gravity         Decimal  @db.Decimal(10, 2)
+  leukocyte_esterase   String?
+  nitrite              String?
+  urobilinogen         String?
+  blood                String?
+  ketones              String?
+  bilirubin            String?
+  glucose              String?
+  protein              String?
+  wbc_count            Decimal  @db.Decimal(10, 2)
+  rbc_count            Decimal  @db.Decimal(10, 2)
+  squamous             String?
+  rental_tubular       String?
+  transitional         String?
+  bacteria             String?
+  yeast                String?
+  mucus_thread         String?
+  amorphous_urates     String?
+  amorphous_phosphates String?
+  uric_acid            String?
+  calcium_oxalate      String?
+  triple_phosphate     String?
+  calcium_carbonate    String?
+  calcium_phosphate    String?
+  ammonium_biurate     String?
+  hyaline              String?
+  fine_granular        String?
+  coarse_granular      String?
+  cast_rbc             Decimal? @db.Decimal(10, 2)
+  cast_wbc             Decimal? @db.Decimal(10, 2)
+  cast_waxy            String?
+  cast_broad           String?
+  createdAt            DateTime @default(now())
+  remarks              String?  @db.Text
 
   @@map("urinalysis")
+}
+
+model Chemistry {
+  id                  Int      @id @default(autoincrement())
+  test_id             Int      @unique
+  test                Test     @relation(fields: [test_id], references: [id])
+  physician           String
+  lab_no              String
+  last_meal_take      DateTime
+  time_taken          DateTime
+  test_requested      String
+  fasting_blood_sugar Decimal? @db.Decimal(10, 2)
+  random_blood_sugar  Decimal? @db.Decimal(10, 2)
+  post_prandial       Decimal? @db.Decimal(10, 2)
+  total_cholesterol   Decimal? @db.Decimal(10, 2)
+  triglycerides       Decimal? @db.Decimal(10, 2)
+  hdl                 Decimal? @db.Decimal(10, 2)
+  ldl                 Decimal? @db.Decimal(10, 2)
+  uric_acid           Decimal? @db.Decimal(10, 2)
+  creatinine          Decimal? @db.Decimal(10, 2)
+  bun                 Decimal? @db.Decimal(10, 2)
+  sgpt                Decimal? @db.Decimal(10, 2)
+  sgot                Decimal? @db.Decimal(10, 2)
+  sodium              Decimal? @db.Decimal(10, 2)
+  potasium            Decimal? @db.Decimal(10, 2)
+  ionized_calcium     Decimal? @db.Decimal(10, 2)
+  magnesium           Decimal? @db.Decimal(10, 2)
+  calcium             Decimal? @db.Decimal(10, 2)
+  remarks             String   @db.Text
+  createdAt           DateTime @default(now())
+
+  @@map("chemistry")
+}
+
+model Apparatus {
+  id              Int        @id @default(autoincrement())
+  apparatus_name  String     @unique
+  unit            String
+  status          Boolean    @db.TinyInt
+  quantity        Int        @default(0)
+  createdAt       DateTime   @default(now())
+  stock_in        StockIn[]
+  stock_out       StockOut[]
+  @@map("apparatus")
+}
+
+model Stock {
+  id              Int        @id @default(autoincrement())
+  user_id         Int
+  user            User       @relation(fields: [user_id], references: [id])
+  type            StockType   
+  createdAt       DateTime   @default(now())
+  stock_in        StockIn[]
+  stock_out       StockOut[]
+  @@map("stock")
+}
+
+model StockIn {
+  id                  Int             @id @default(autoincrement())
+  apparatus_id        Int
+  apparatus           Apparatus       @relation(fields: [apparatus_id], references: [id])
+  stock_id            Int
+  stock               Stock           @relation(fields: [stock_id], references: [id])
+  quantity            Int
+  createdAt           DateTime   @default(now())
+  @@map("stock_in")
+}
+
+model StockOut {
+  id                  Int             @id @default(autoincrement())
+  apparatus_id        Int
+  apparatus           Apparatus       @relation(fields: [apparatus_id], references: [id])
+  stock_id            Int
+  stock               Stock           @relation(fields: [stock_id], references: [id])
+  test_id             Int             
+  test                Test            @relation(fields: [test_id], references: [id])
+  quantity            Int
+  createdAt           DateTime        @default(now())
+  @@map("stock_out")
 }

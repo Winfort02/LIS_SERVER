@@ -1,4 +1,11 @@
-import { $Enums, Hematology, Patient, Urinalysis, User } from "@prisma/client";
+import {
+  $Enums,
+  Chemistry,
+  Hematology,
+  Patient,
+  Urinalysis,
+  User,
+} from "@prisma/client";
 import { Decimal } from "@prisma/client/runtime/library";
 
 export class SuccessReponse {
@@ -68,8 +75,8 @@ export class Mapper {
       spec_gravity: item.spec_gravity.toNumber(),
       wbc_count: item.wbc_count.toNumber(),
       rbc_count: item.rbc_count.toNumber(),
-      cast_rbc: item.cast_rbc.toNumber(),
-      cast_wbc: item.cast_wbc.toNumber(),
+      cast_rbc: item.cast_rbc?.toNumber(),
+      cast_wbc: item.cast_wbc?.toNumber(),
     }));
   }
 
@@ -106,8 +113,32 @@ export class Mapper {
       spec_gravity: response.spec_gravity.toNumber(),
       wbc_count: response.wbc_count.toNumber(),
       rbc_count: response.rbc_count.toNumber(),
-      cast_rbc: response.cast_rbc.toNumber(),
-      cast_wbc: response.cast_wbc.toNumber(),
+      cast_rbc: response.cast_rbc?.toNumber(),
+      cast_wbc: response.cast_wbc?.toNumber(),
+    };
+  }
+
+  SingleChemistryResponse(response: Chemistry) {
+    if (!response) return null;
+    return {
+      ...response,
+      fasting_blood_sugar: response.fasting_blood_sugar?.toNumber() || null,
+      random_blood_sugar: response.random_blood_sugar?.toNumber() || null,
+      post_prandial: response.post_prandial?.toNumber() || null,
+      total_cholesterol: response.total_cholesterol?.toNumber() || null,
+      triglycerides: response.triglycerides?.toNumber() || null,
+      hdl: response.hdl?.toNumber() || null,
+      ldl: response.ldl?.toNumber() || null,
+      uric_acid: response.uric_acid?.toNumber() || null,
+      creatinine: response.creatinine?.toNumber() || null,
+      bun: response.bun?.toNumber() || null,
+      sgpt: response.sgpt?.toNumber() || null,
+      sgot: response.sgot?.toNumber() || null,
+      sodium: response.sodium?.toNumber() || null,
+      potasium: response.potasium?.toNumber() || null,
+      ionized_calcium: response.ionized_calcium?.toNumber() || null,
+      magnesium: response.magnesium?.toNumber() || null,
+      calcium: response.calcium?.toNumber() || null,
     };
   }
 }

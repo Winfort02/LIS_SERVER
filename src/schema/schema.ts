@@ -44,11 +44,42 @@ export const urinalysisSchema = z.object({
   spec_gravity: z.number().multipleOf(0.001),
   wbc_count: z.number().multipleOf(0.01),
   rbc_count: z.number().multipleOf(0.01),
-  cast_rbc: z.number().multipleOf(0.01),
-  cast_wbc: z.number().multipleOf(0.01),
+  cast_rbc: z.number().multipleOf(0.01).nullable(),
+  cast_wbc: z.number().multipleOf(0.01).nullable(),
 });
 
 export const testSchema = z.object({
   patient_id: z.number(),
   type: z.string(),
+});
+
+export const ChemistrySchema = z.object({
+  test_id: z.number(),
+  physician: z.string(),
+  lab_no: z.string(),
+  test_requested: z.string(),
+  fasting_blood_sugar: z.number().multipleOf(0.01).nullable(),
+  random_blood_sugar: z.number().multipleOf(0.01).nullable(),
+  post_prandial: z.number().multipleOf(0.01).nullable(),
+  total_cholesterol: z.number().multipleOf(0.01).nullable(),
+  triglycerides: z.number().multipleOf(0.01).nullable(),
+  hdl: z.number().multipleOf(0.01).nullable(),
+  ldl: z.number().multipleOf(0.01).nullable(),
+  uric_acid: z.number().multipleOf(0.01).nullable(),
+  creatinine: z.number().multipleOf(0.01).nullable(),
+  bun: z.number().multipleOf(0.01).nullable(),
+  sgpt: z.number().multipleOf(0.01).nullable(),
+  sgot: z.number().multipleOf(0.01).nullable(),
+  sodium: z.number().multipleOf(0.01).nullable(),
+  potasium: z.number().multipleOf(0.01).nullable(),
+  ionized_calcium: z.number().multipleOf(0.01).nullable(),
+  magnesium: z.number().multipleOf(0.01).nullable(),
+  calcium: z.number().multipleOf(0.01).nullable(),
+  remarks: z.string(),
+});
+
+export const ApparatusSchema = z.object({
+  apparatus_name: z.string(),
+  unit: z.string(),
+  status: z.boolean(),
 });

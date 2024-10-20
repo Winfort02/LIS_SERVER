@@ -1,4 +1,14 @@
-import { Hematology, Patient, Test, Urinalysis } from "@prisma/client";
+import {
+  Apparatus,
+  Chemistry,
+  Hematology,
+  Patient,
+  Stock,
+  StockIn,
+  StockOut,
+  Test,
+  Urinalysis,
+} from "@prisma/client";
 import { Request } from "express";
 import { GenerateTransactionNo } from "../service/test.service.";
 
@@ -92,4 +102,72 @@ export const TestRequest = async (request: Request) => {
     type: request.body.type,
     transaction_number: await GenerateTransactionNo(),
   } as Test;
+};
+
+export const ChemistryRequest = (request: Request) => {
+  return {
+    test_id: request.body.test_id,
+    physician: request.body.physician,
+    lab_no: request.body.lab_no,
+    last_meal_take: request.body.last_meal_take,
+    time_taken: request.body.time_taken,
+    test_requested: request.body.test_requested,
+    fasting_blood_sugar: request.body.fasting_blood_sugar,
+    random_blood_sugar: request.body.random_blood_sugar,
+    post_prandial: request.body.post_prandial,
+    total_cholesterol: request.body.total_cholesterol,
+    triglycerides: request.body.triglycerides,
+    hdl: request.body.hdl,
+    ldl: request.body.ldl,
+    uric_acid: request.body.uric_acid,
+    creatinine: request.body.creatinine,
+    bun: request.body.bun,
+    sgpt: request.body.sgpt,
+    sgot: request.body.sgot,
+    sodium: request.body.sodium,
+    potasium: request.body.potasium,
+    ionized_calcium: request.body.ionized_calcium,
+    magnesium: request.body.magnesium,
+    calcium: request.body.calcium,
+    remarks: request.body.remarks,
+  } as Chemistry;
+};
+
+export const PaginationRequest = (request: Request) => {
+  const page = parseInt(request.query.page as string) || 1;
+  const pageSize = parseInt(request.query.size as string) || 25;
+  const keywords = (request.query.keywords as string) || "";
+  const offset = (page - 1) * pageSize;
+  return { page, pageSize, keywords, offset };
+};
+
+export const productRequest = (req: Request) => {
+  return {
+    apparatus_name: req.body.apparatus_name,
+    status: req.body.status,
+    unit: req.body.unit,
+  } as Apparatus;
+};
+
+export const stockInRequest = (req: Request) => {
+  const stock = {
+    user_id: req.user?.id,
+    type: req.body.type,
+  };
+  return {
+    stock: stock as Stock,
+    stockIn: (req.body?.stock_in as StockIn[]) || [],
+  };
+};
+
+export const stockOutRequest = (req: Request) => {
+  const stock = {
+    user_id: req.user?.id,
+    type: req.body.type,
+  };
+
+  return {
+    stock: stock as Stock,
+    stockOut: (req.body?.stock_out as StockOut[]) || [],
+  };
 };

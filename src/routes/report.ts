@@ -2,6 +2,7 @@ import { Router } from "express";
 import { AuthenticationMiddleWare } from "../middlewares/authentication";
 import { ControllerHandler } from "../helpers/controller-handler";
 import {
+  GenerateChemistryPDF,
   GenerateHematologyPDF,
   GenerateUrinalysisPDF,
 } from "../controllers/report-controller";
@@ -9,7 +10,7 @@ import {
 const reportRouter: Router = Router();
 
 reportRouter.get(
-  "/hematogoly/:id",
+  "/hematology/:id",
   [AuthenticationMiddleWare],
   ControllerHandler(GenerateHematologyPDF)
 );
@@ -18,6 +19,12 @@ reportRouter.get(
   "/urinalysis/:id",
   [AuthenticationMiddleWare],
   ControllerHandler(GenerateUrinalysisPDF)
+);
+
+reportRouter.get(
+  "/chemistry/:id",
+  [AuthenticationMiddleWare],
+  ControllerHandler(GenerateChemistryPDF)
 );
 
 export default reportRouter;

@@ -39,6 +39,11 @@ hbs.registerHelper("total", (hematology: Hematology) => {
   );
 });
 
+hbs.registerHelper("converter", (value: number | null, converter: number) => {
+  if (!value) return null;
+  return (value * converter).toFixed(2);
+});
+
 const generateBrowser = async () => {
   return await puppeteer.launch({
     headless: true,
@@ -107,6 +112,38 @@ export const GenerateUrinalysisPDF = async (req: Request, res: Response) => {
   await page.setContent(content);
   await page.emulateMediaType("screen");
   const filePath = `${process.cwd()}/src/pdf/urinalysis.pdf`;
+  await page.pdf({
+    path: filePath,
+    format: "A4",
+    printBackground: true,
+  });
+  await browser.close();
+  // Send the PDF buffer as a response
+  res.sendFile(filePath);
+};
+
+export const GenerateChemistryPDF = async (req: Request, res: Response) => {
+  const id = parseInt(req.params.id, 10);
+  const chemistry = await prismaClient.chemistry.findUnique({
+    where: { id },
+    include: {
+      test: {
+        include: {
+          patient: true,
+        },
+      },
+    },
+  });
+  if (!chemistry) {
+    throw new NotFound(UrinalysisErrorMerssage.NotFound, ErrorCode.NOT_FOUND);
+  }
+  const browser = await generateBrowser();
+  const page = await browser.newPage();
+  const content = await compiler("chemistry", { data: chemistry });
+
+  await page.setContent(content);
+  await page.emulateMediaType("screen");
+  const filePath = `${process.cwd()}/src/pdf/chemistry.pdf`;
   await page.pdf({
     path: filePath,
     format: "A4",

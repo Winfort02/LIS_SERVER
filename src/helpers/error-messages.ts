@@ -32,3 +32,7 @@ export const TestErrorMessage = {
   NotAbleToUpdate:
     "Unable to update test details as there's a current test record base on the current type",
 };
+
+export const ChemistryErrorMessage = {
+  NotFound: "Chemistry not found !",
+};

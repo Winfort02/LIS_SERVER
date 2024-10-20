@@ -6,6 +6,9 @@ import hematologyRouter from "./hematology";
 import reportRouter from "./report";
 import urinalysisRouter from "./urinalysis";
 import testRouter from "./test";
+import chemistryRouter from "./chemistry";
+import apparatusRouter from "./apparatus";
+import stockRouter from "./stock";
 
 const rootRouter: Router = Router();
 
@@ -16,5 +19,8 @@ rootRouter.use("/hematology", hematologyRouter);
 rootRouter.use("/report", reportRouter);
 rootRouter.use("/urinalysis", urinalysisRouter);
 rootRouter.use("/tests", testRouter);
+rootRouter.use("/chemistry", chemistryRouter);
+rootRouter.use("/apparatus", apparatusRouter);
+rootRouter.use("/stock", stockRouter);
 
 export default rootRouter;

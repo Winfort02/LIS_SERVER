@@ -4,6 +4,7 @@ import { ControllerHandler } from "../helpers/controller-handler";
 import {
   CreateTest,
   DeletteTest,
+  GetAllTestAsync,
   GetPatientTestHistory,
   GetTestById,
   GetTestByTransactionNo,
@@ -49,6 +50,12 @@ testRouter.delete(
   "/:id",
   [AuthenticationMiddleWare],
   ControllerHandler(DeletteTest)
+);
+
+testRouter.get(
+  "/test/list",
+  [AuthenticationMiddleWare],
+  ControllerHandler(GetAllTestAsync)
 );
 
 export default testRouter;

@@ -1,0 +1,354 @@
+<style>
+  body, html { margin: 0; padding: 0; box-sizing: border-box; font-family:
+  'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode',
+  Geneva, Verdana, sans-serif;} .container { width: 100%; padding: 10px; }
+  .header { text-align: center;} .header span { color: rgb(218, 6, 6)} table
+  {width: 97%; border-collapse: collapse; text-transform: uppercase;} table tr
+  th { border: 1px solid #000; text-align: left; padding: 5px 8px; font-size:
+  12px; font-weight: normal;} .sub-title { text-align: center; height: 20px;
+  width: 97%; background-color: rgb(29, 191, 219);}
+</style>
+
+<html>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h2> STAT<span>LAB</span> DIAGNOSTIC LABORATORY</h2>
+        <h5>Lor lin Bldg. 172-D Corner Magsaysay St. and Lizares St. Zone 6.
+          Talisay City, Neg. Occ.. Phil. 6115
+        </h5>
+        <h5>PHONE NOS. 09568255620 / 09128677606 GMAIL: statlabtalisay@gmail.com
+          FB PAGE: STAT LAB
+        </h5>
+      </div>
+      <div class="content-detail">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 150px;">PATIENT NAME: </th>
+              <th style="width: 300px;">
+                {{data.test.patient.last_name}}
+                {{data.test.patient.first_name}},
+                {{data.test.patient.middle_name}}</th>
+              <th style="width: 70px;">SEX: </th>
+              <th>{{data.test.patient.sex}}</th>
+            </tr>
+            <tr>
+              <th style="width: 150px;">ADDRESS: </th>
+              <th style="width: 300px;">
+                {{data.test.patient.address}}</th>
+              <th style="width: 70px;">Date: </th>
+              <th>{{dateFormat data.createdAt "LLL"}}</th>
+            </tr>
+            <tr>
+              <th style="width: 150px;">PHYSICIAN: </th>
+              <th style="width: 300px;">
+                {{data.physician}}</th>
+              <th style="width: 70px;">LAB NO: </th>
+              <th>{{data.lab_no}}</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+      <div class="sub-title">
+        <h4>CHEMISTRY</h4>
+      </div>
+      <div class="content-test-result" style="margin-top: 20px;">
+        <table>
+          <thead>
+            <tr>
+              <th>LAST MEAL</th>
+              <th style="width: 70px;">
+                {{dateFormat data.last_meal_take "LT"}}</th>
+              <th></th>
+              <th></th>
+              <th colspan="3" style="text-align: center;">Test Requested</th>
+            </tr>
+            <tr>
+              <th>TIME TAKEN </th>
+              <th style="width: 70px;">
+                {{dateFormat data.time_taken "LT"}}</th>
+              <th></th>
+              <th></th>
+              <th
+                colspan="3"
+                style="text-align: center;"
+              >{{data.test_requested}}</th>
+            </tr>
+            <tr>
+              <th style="text-align: center;">EXAMINATION</th>
+              <th style="text-align: center;">RESULTS</th>
+              <th style="text-align: center;" colspan="2">REFERENCE VALUE</th>
+              <th style="text-align: center;">RESULTS</th>
+              <th style="text-align: center;" colspan="2">REFERENCE VALUE</th>
+            </tr>
+            <!-- BLOOD SUGAR TEST -->
+            <tr>
+              <th
+                style="text-align: center; background-color:#a5a1a1"
+                colspan="2"
+              >BLOOD SUGAR </th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+            </tr>
+            <tr>
+              <th>FASTING BLOOD SUGAR
+              </th>
+              <th style="text-align: center;">
+                {{converter data.fasting_blood_sugar 0.05551}}
+              </th>
+              <th style="text-align: center;" rowspan="3"> 3.9 - 6.4 </th>
+              <th style="text-align: center;" rowspan="3"> mmol/L </th>
+              <th style="text-align: center;">{{data.fasting_blood_sugar}}</th>
+              <th style="text-align: center;" rowspan="3"> 70 - 115 </th>
+              <th style="text-align: center;" rowspan="3"> mg/dL </th>
+            </tr>
+            <tr>
+              <th>RANDOM BLOOD SUGAR </th>
+              <th style="text-align: center;">
+                {{converter data.random_blood_sugar 0.05551}}
+              </th>
+              <th style="text-align: center;">{{data.random_blood_sugar}}</th>
+            </tr>
+            <tr>
+              <th>2HR POST PRANDIAL </th>
+              <th style="text-align: center;">
+                {{converter data.post_prandial 0.05551}}
+              </th>
+              <th style="text-align: center;">{{data.post_prandial}}</th>
+            </tr>
+            <!--LIPID PROFILE -->
+            <tr>
+              <th
+                style="text-align: center; background-color:#a5a1a1"
+                colspan="2"
+              >LIPID PROFILE </th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+            </tr>
+            <tr>
+              <th>TOTAL CHOLESTEROL
+              </th>
+              <th style="text-align: center;">
+                {{converter data.total_cholesterol 0.02586}}
+              </th>
+              <th style="text-align: center;"> 0 - 5.2 </th>
+              <th style="text-align: center;" rowspan="4"> mmol/L </th>
+              <th style="text-align: center;">{{data.fasting_blood_sugar}}</th>
+              <th style="text-align: center;"> &lt;200 </th>
+              <th style="text-align: center;" rowspan="4"> mg/dL </th>
+            </tr>
+            <tr>
+              <th>TRIGLYCERIDES
+              </th>
+              <th style="text-align: center;">
+                {{converter data.triglycerides 0.01126}}
+              </th>
+              <th style="text-align: center;"> 0 - 2.3</th>
+              <th style="text-align: center;">{{data.triglycerides}}</th>
+              <th style="text-align: center;"> 0 - 205 </th>
+            </tr>
+            <tr>
+              <th>HDL
+              </th>
+              <th style="text-align: center;">
+                {{converter data.hdl 0.026}}
+              </th>
+              <th style="text-align: center;"> M:&gt; 0.9 F:&gt;1.5</th>
+              <th style="text-align: center;">{{data.hdl}}</th>
+              <th style="text-align: center;"> M:&gt; 35 F:&gt;44</th>
+            </tr>
+            <tr>
+              <th>LDL
+              </th>
+              <th style="text-align: center;">
+                {{converter data.ldl 0.026}}
+              </th>
+              <th style="text-align: center;"> 0 - 4.11</th>
+              <th style="text-align: center;">{{data.ldl}}</th>
+              <th style="text-align: center;"> 0 - 158</th>
+            </tr>
+            <!-- KIDNEY FUNCTION TEST -->
+            <tr>
+              <th
+                style="text-align: center; background-color:#a5a1a1"
+                colspan="2"
+              >KIDNEY FUNCTION TEST </th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+            </tr>
+            <tr>
+              <th rowspan="2">URIC ACID
+              </th>
+              <th style="text-align: center;" rowspan="2">
+                {{converter data.uric_acid 59.48}}
+              </th>
+              <th style="text-align: center;"> M: 214 - 488 </th>
+              <th style="text-align: center;" rowspan="2"> mmol/L </th>
+              <th
+                style="text-align: center;"
+                rowspan="2"
+              >{{data.uric_acid}}</th>
+              <th style="text-align: center;"> M: 3.60 - 8.20 </th>
+              <th style="text-align: center;" rowspan="2"> mg/dL </th>
+            </tr>
+            <tr>
+              <th style="text-align: center;"> F: 137 - 363 </th>
+              <th style="text-align: center;"> F: 2.30 - 6.10 </th>
+            </tr>
+            <tr>
+              <th rowspan="2">CREATININE
+              </th>
+              <th style="text-align: center;" rowspan="2">
+                {{converter data.creatinine 88.4}}
+              </th>
+              <th style="text-align: center;"> M: 70 - 115 </th>
+              <th style="text-align: center;" rowspan="2"> mmol/L </th>
+              <th
+                style="text-align: center;"
+                rowspan="2"
+              >{{data.creatinine}}</th>
+              <th style="text-align: center;"> M: 0.80 - 1.30 </th>
+              <th style="text-align: center;" rowspan="2"> mg/dL </th>
+            </tr>
+            <tr>
+              <th style="text-align: center;"> F: 0.50 - 0.90 </th>
+              <th style="text-align: center;"> F: 2.30 - 6.10 </th>
+            </tr>
+            <tr>
+              <th>BUN</th>
+              <th style="text-align: center;">
+                {{converter data.bun 0.357}}
+              </th>
+              <th style="text-align: center;"> 2.8 - 7.2 </th>
+              <th style="text-align: center;"> mmol/L </th>
+              <th style="text-align: center;">{{data.bun}}</th>
+              <th style="text-align: center;"> 8 - 20 </th>
+              <th style="text-align: center;"> mg/dL </th>
+            </tr>
+            <!-- ENZYMES -->
+            <tr>
+              <th
+                style="text-align: center; background-color:#a5a1a1"
+                colspan="2"
+              >ENZYMES </th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+            </tr>
+            <tr>
+              <th rowspan="2">SGPT</th>
+              <th style="text-align: center;" rowspan="2">
+                {{converter data.sgpt 1}}
+              </th>
+              <th style="text-align: center;"> M: 0 - 45 </th>
+              <th style="text-align: center;" rowspan="2"> U/L </th>
+              <th style="text-align: center;" rowspan="2">{{data.sgpt}}</th>
+              <th style="text-align: center;"> M: 0 - 45 </th>
+              <th style="text-align: center;" rowspan="2"> mg/dL </th>
+            </tr>
+            <tr>
+              <th style="text-align: center;"> F: 0 - 34 </th>
+              <th style="text-align: center;"> F: 0 - 34 </th>
+            </tr>
+            <tr>
+              <th>SGOT</th>
+              <th style="text-align: center;">
+                {{converter data.sgot 1}}
+              </th>
+              <th style="text-align: center;"> F: 0 - 34 </th>
+              <th style="text-align: center;"> U/L </th>
+              <th style="text-align: center;">{{data.sgot}}</th>
+              <th style="text-align: center;"> F: 0 - 34 </th>
+              <th style="text-align: center;"> mg/dL </th>
+            </tr>
+            <!-- ELECTROLYTES -->
+            <tr>
+              <th
+                style="text-align: center; background-color:#a5a1a1"
+                colspan="2"
+              >ELECTROLYTES </th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+            </tr>
+            <tr>
+              <th>SODIUM</th>
+              <th style="text-align: center;">
+                {{converter data.sodium 1}}
+              </th>
+              <th style="text-align: center;">135 - 148 </th>
+              <th style="text-align: center;"> mmol/L</th>
+              <th style="text-align: center;">{{data.sodium}}</th>
+              <th style="text-align: center;">135 - 148 </th>
+              <th style="text-align: center;"> mg/dL </th>
+            </tr>
+            <tr>
+              <th>POTASSIUM</th>
+              <th style="text-align: center;">
+                {{converter data.potasium 1}}
+              </th>
+              <th style="text-align: center;">3.5 - 5.5 </th>
+              <th style="text-align: center;"> mmol/L</th>
+              <th style="text-align: center;">{{data.potasium}}</th>
+              <th style="text-align: center;">3.5 - 5.5 </th>
+              <th style="text-align: center;"> mg/dL </th>
+            </tr>
+            <tr>
+              <th>IONIZED CALCIUM</th>
+              <th style="text-align: center;">
+                {{converter data.ionized_calcium 1}}
+              </th>
+              <th style="text-align: center;">1.13 - 1.32 </th>
+              <th style="text-align: center;"> mmol/L</th>
+              <th style="text-align: center;">{{data.ionized_calcium}}</th>
+              <th style="text-align: center;"></th>
+              <th style="text-align: center;"> </th>
+            </tr>
+            <tr>
+              <th>MAGNESIUM</th>
+              <th style="text-align: center;">
+                {{converter data.magnesium 1}}
+              </th>
+              <th style="text-align: center;">0.74 - 1.06</th>
+              <th style="text-align: center;"> </th>
+              <th style="text-align: center;">{{data.magnesium}}</th>
+              <th style="text-align: center;"> 1.8 - 2.6</th>
+              <th style="text-align: center;"> mg/L</th>
+            </tr>
+            <tr>
+              <th>CALCIUM</th>
+              <th style="text-align: center;">
+                {{converter data.calcium 1}}
+              </th>
+              <th style="text-align: center;">2.02 - 2.6</th>
+              <th style="text-align: center;"> mmol/L</th>
+              <th style="text-align: center;">{{data.calcium}}</th>
+              <th style="text-align: center;"> 8.1 - 10.4</th>
+              <th style="text-align: center;"> mg/L</th>
+            </tr>
+            <tr>
+              <th colspan="7">REMARKS : </th>
+            </tr>
+            <tr>
+              <th colspan="7">{{data.remarks}}</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>

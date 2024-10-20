@@ -26,6 +26,7 @@ export const GetTransactionNoDetails = async (transactionNo: string) => {
         patient: true,
         hematology: true,
         urinalysis: true,
+        chemistry: true,
       },
     });
   } catch (error) {
@@ -75,14 +76,16 @@ export const ValidateTestRecord = async (id: number, type: string) => {
     const urinalysis = await prismaClient.urinalysis.findUnique({
       where: { test_id: id },
     });
+    const chemistry = await prismaClient.chemistry.findUnique({
+      where: { test_id: id },
+    });
     switch (testType) {
       case "hematology":
-        if (hematology) return false;
-        if (urinalysis) return false;
-        return true;
       case "urinalysis":
+      case "chemistry":
         if (hematology) return false;
         if (urinalysis) return false;
+        if (chemistry) return false;
         return true;
     }
     return false;
@@ -160,6 +163,19 @@ export const GetPatientTest = async (
     );
     return pagination(page, pageSize, totalPages, test);
   } catch (error) {
+    throw new ServerError(error);
+  }
+};
+
+export const GetAllTest = async () => {
+  try {
+    return await prismaClient.test.findMany({
+      include: {
+        patient: true,
+      },
+    });
+  } catch (error) {
+    console.log(error);
     throw new ServerError(error);
   }
 };
