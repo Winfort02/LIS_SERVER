@@ -76,7 +76,11 @@ export const GetStockPaginate = async (
             apparatus: true,
           },
         },
-        stock_out: true,
+        stock_out: {
+          include: {
+            apparatus: true,
+          },
+        },
         user: true,
       },
     });

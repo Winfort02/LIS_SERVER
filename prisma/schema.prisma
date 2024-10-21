@@ -23,6 +23,11 @@ enum StockType {
   STOCK_OUT
 }
 
+enum AdjustmentType {
+  INCREASE
+  DECREASE
+}
+
 model User {
   id          Int        @id @default(autoincrement())
   name        String
@@ -32,6 +37,8 @@ model User {
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
   stock       Stock[]
+  adjustment  StockAdjustment[]
+  expire      StockExpired[]
   @@map("users")
 }
 
@@ -184,6 +191,8 @@ model Apparatus {
   createdAt       DateTime   @default(now())
   stock_in        StockIn[]
   stock_out       StockOut[]
+  adjustment      StockAdjustment[]
+  expire          StockExpired[]
   @@map("apparatus")
 }
 
@@ -220,4 +229,30 @@ model StockOut {
   quantity            Int
   createdAt           DateTime        @default(now())
   @@map("stock_out")
+}
+
+model StockAdjustment {
+  id                  Int             @id @default(autoincrement())
+  user_id             Int
+  user                User            @relation(fields: [user_id], references: [id])
+  apparatus_id        Int
+  apparatus           Apparatus       @relation(fields: [apparatus_id], references: [id])
+  quantity            Int
+  type                AdjustmentType
+  remarks             String
+  createdAt           DateTime        @default(now())
+  @@map("stock_adjustment")
+}
+
+model StockExpired  {
+  id                  Int             @id @default(autoincrement())
+  user_id             Int
+  user                User            @relation(fields: [user_id], references: [id])
+  apparatus_id        Int
+  apparatus           Apparatus       @relation(fields: [apparatus_id], references: [id])
+  quantity            Int
+  status              Boolean         @db.TinyInt
+  remarks             String
+  createdAt           DateTime        @default(now())
+  @@map("stock_expire")
 }
