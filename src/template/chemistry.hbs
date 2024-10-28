@@ -27,8 +27,8 @@
             <tr>
               <th style="width: 150px;">PATIENT NAME: </th>
               <th style="width: 300px;">
-                {{data.test.patient.last_name}}
-                {{data.test.patient.first_name}},
+                {{data.test.patient.last_name}},
+                {{data.test.patient.first_name}}
                 {{data.test.patient.middle_name}}</th>
               <th style="width: 70px;">SEX: </th>
               <th>{{data.test.patient.sex}}</th>
@@ -250,7 +250,7 @@
             <tr>
               <th rowspan="2">SGPT</th>
               <th style="text-align: center;" rowspan="2">
-                {{converter data.sgpt 1}}
+                {{data.sgpt}}
               </th>
               <th style="text-align: center;"> M: 0 - 45 </th>
               <th style="text-align: center;" rowspan="2"> U/L </th>
@@ -265,7 +265,7 @@
             <tr>
               <th>SGOT</th>
               <th style="text-align: center;">
-                {{converter data.sgot 1}}
+                {{data.sgot}}
               </th>
               <th style="text-align: center;"> F: 0 - 34 </th>
               <th style="text-align: center;"> U/L </th>

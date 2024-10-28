@@ -9,6 +9,8 @@ import testRouter from "./test";
 import chemistryRouter from "./chemistry";
 import apparatusRouter from "./apparatus";
 import stockRouter from "./stock";
+import expiredStockRouter from "./expired-stock";
+import dashboardRouter from "./dashboard";
 
 const rootRouter: Router = Router();
 
@@ -22,5 +24,7 @@ rootRouter.use("/tests", testRouter);
 rootRouter.use("/chemistry", chemistryRouter);
 rootRouter.use("/apparatus", apparatusRouter);
 rootRouter.use("/stock", stockRouter);
+rootRouter.use("/stock-expired", expiredStockRouter);
+rootRouter.use("/dashboard", dashboardRouter);
 
 export default rootRouter;

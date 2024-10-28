@@ -42,10 +42,10 @@ export const urinalysisSchema = z.object({
   lab_no: z.string(),
   ph: z.number().multipleOf(0.01),
   spec_gravity: z.number().multipleOf(0.001),
-  wbc_count: z.number().multipleOf(0.01),
-  rbc_count: z.number().multipleOf(0.01),
-  cast_rbc: z.number().multipleOf(0.01).nullable(),
-  cast_wbc: z.number().multipleOf(0.01).nullable(),
+  wbc_count: z.string(),
+  rbc_count: z.string(),
+  cast_rbc: z.string(),
+  cast_wbc: z.string(),
 });
 
 export const testSchema = z.object({

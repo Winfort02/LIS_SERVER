@@ -73,10 +73,6 @@ export class Mapper {
       ...item,
       ph: item.ph.toNumber(),
       spec_gravity: item.spec_gravity.toNumber(),
-      wbc_count: item.wbc_count.toNumber(),
-      rbc_count: item.rbc_count.toNumber(),
-      cast_rbc: item.cast_rbc?.toNumber(),
-      cast_wbc: item.cast_wbc?.toNumber(),
     }));
   }
 
@@ -111,10 +107,6 @@ export class Mapper {
       ...response,
       ph: response.ph.toNumber(),
       spec_gravity: response.spec_gravity.toNumber(),
-      wbc_count: response.wbc_count.toNumber(),
-      rbc_count: response.rbc_count.toNumber(),
-      cast_rbc: response.cast_rbc?.toNumber(),
-      cast_wbc: response.cast_wbc?.toNumber(),
     };
   }
 

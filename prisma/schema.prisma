@@ -121,8 +121,8 @@ model Urinalysis {
   bilirubin            String?
   glucose              String?
   protein              String?
-  wbc_count            Decimal  @db.Decimal(10, 2)
-  rbc_count            Decimal  @db.Decimal(10, 2)
+  wbc_count            String
+  rbc_count            String
   squamous             String?
   rental_tubular       String?
   transitional         String?
@@ -140,8 +140,8 @@ model Urinalysis {
   hyaline              String?
   fine_granular        String?
   coarse_granular      String?
-  cast_rbc             Decimal? @db.Decimal(10, 2)
-  cast_wbc             Decimal? @db.Decimal(10, 2)
+  cast_rbc             String
+  cast_wbc             String
   cast_waxy            String?
   cast_broad           String?
   createdAt            DateTime @default(now())

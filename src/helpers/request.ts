@@ -4,6 +4,7 @@ import {
   Hematology,
   Patient,
   Stock,
+  StockExpired,
   StockIn,
   StockOut,
   Test,
@@ -170,4 +171,14 @@ export const stockOutRequest = (req: Request) => {
     stock: stock as Stock,
     stockOut: (req.body?.stock_out as StockOut[]) || [],
   };
+};
+
+export const expiredStockRequest = (req: Request) => {
+  return {
+    user_id: req.user?.id,
+    status: true,
+    apparatus_id: req.body.apparatus_id,
+    quantity: req.body.quantity,
+    remarks: req.body.remarks,
+  } as StockExpired;
 };

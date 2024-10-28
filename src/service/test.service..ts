@@ -123,6 +123,7 @@ export const GetTestPaginate = async (
         patient: true,
         hematology: true,
         urinalysis: true,
+        chemistry: true,
       },
     });
     const totalPages = await prismaClient.test.count(
@@ -175,7 +176,6 @@ export const GetAllTest = async () => {
       },
     });
   } catch (error) {
-    console.log(error);
     throw new ServerError(error);
   }
 };

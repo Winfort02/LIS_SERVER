@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { prismaClient } from "..";
 import { hashSync, compareSync } from "bcrypt";
 import * as jwt from "jsonwebtoken";
-import { BadRequest } from "../exceptions/request";
+import { BadRequest, UnAuthorize } from "../exceptions/request";
 import { ErrorCode, SuccessCode } from "../exceptions/generic";
 import { signUpSchema } from "../schema/schema";
 import { LoginErrorMessage } from "../helpers/error-messages";
@@ -58,6 +58,23 @@ export const SignUp = async (req: Request, res: Response) => {
   });
   const userResponse = new UserResponse(createdUser);
   return res.json(new SuccessReponse(userResponse, SuccessCode.CREATED, true));
+};
+
+export const ChangePassword = async (req: Request, res: Response) => {
+  const { password } = req.body;
+  console.log(req.user);
+  if (!req.user) {
+    throw new UnAuthorize("Unauthorized");
+  }
+  const id = req.user.id;
+  const newPassword = hashSync(password, 12);
+  const user = await prismaClient.user.update({
+    where: { id },
+    data: { password: newPassword },
+  });
+  return res.json(
+    new SuccessReponse(new UserResponse(user), SuccessCode.NO_CONTENT, true)
+  );
 };
 
 /**
