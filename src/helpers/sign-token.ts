@@ -6,6 +6,7 @@ export const generateSignToken = (user: User) => {
   const _user = {
     id: user.id,
     email: user.email,
+    role: user.role,
   };
   const options: SignOptions = { expiresIn: "8h" };
 

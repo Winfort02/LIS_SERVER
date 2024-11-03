@@ -62,7 +62,6 @@ export const SignUp = async (req: Request, res: Response) => {
 
 export const ChangePassword = async (req: Request, res: Response) => {
   const { password } = req.body;
-  console.log(req.user);
   if (!req.user) {
     throw new UnAuthorize("Unauthorized");
   }
@@ -70,6 +69,18 @@ export const ChangePassword = async (req: Request, res: Response) => {
   const newPassword = hashSync(password, 12);
   const user = await prismaClient.user.update({
     where: { id },
+    data: { password: newPassword },
+  });
+  return res.json(
+    new SuccessReponse(new UserResponse(user), SuccessCode.NO_CONTENT, true)
+  );
+};
+
+export const ResetPassword = async (req: Request, res: Response) => {
+  const { password, email } = req.body;
+  const newPassword = hashSync(password, 12);
+  const user = await prismaClient.user.update({
+    where: { email },
     data: { password: newPassword },
   });
   return res.json(

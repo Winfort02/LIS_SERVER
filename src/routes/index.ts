@@ -11,6 +11,7 @@ import apparatusRouter from "./apparatus";
 import stockRouter from "./stock";
 import expiredStockRouter from "./expired-stock";
 import dashboardRouter from "./dashboard";
+import adjustmentRouter from "./adjustment";
 
 const rootRouter: Router = Router();
 
@@ -26,5 +27,6 @@ rootRouter.use("/apparatus", apparatusRouter);
 rootRouter.use("/stock", stockRouter);
 rootRouter.use("/stock-expired", expiredStockRouter);
 rootRouter.use("/dashboard", dashboardRouter);
+rootRouter.use("/adjustment", adjustmentRouter);
 
 export default rootRouter;

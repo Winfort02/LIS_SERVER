@@ -15,10 +15,17 @@ export const CountStats = async () => {
   }
 };
 
-export const CountLaboratoyTest = async () => {
+export const CountLaboratoyTest = async (date: Date) => {
   try {
+    const year = date.getFullYear();
     const tests = await prismaClient.test.groupBy({
       by: ["type", "createdAt"],
+      where: {
+        createdAt: {
+          gte: new Date(`${year}-01-01`), // Start of the year
+          lt: new Date(`${year + 1}-01-01`), // Start of the next year
+        },
+      },
       _count: {
         id: true,
       },
@@ -38,10 +45,58 @@ export const SumStockQuantity = async () => {
     const outgoing = (await GetTotalOutgoing())._sum.quantity || 0;
     const expired = (await GetTotalExpired())._sum.quantity || 0;
     const adjustment = (await GetTotalAdjustment())._sum.quantity || 0;
-    return [incoming, outgoing, expired, adjustment];
+    const overall = incoming + outgoing + expired + adjustment;
+
+    return [
+      getPercentage(incoming, overall),
+      getPercentage(outgoing, overall),
+      getPercentage(expired, overall),
+      getPercentage(adjustment, overall),
+    ];
   } catch (error) {
     throw new ServerError(error);
   }
+};
+
+export const GetLatestTransaction = async () => {
+  try {
+    return await prismaClient.test.findMany({
+      take: 10,
+      include: {
+        patient: true,
+      },
+    });
+  } catch (error) {
+    throw new ServerError(error);
+  }
+};
+
+export const GetLowQuantityApparatus = async () => {
+  try {
+    return await prismaClient.apparatus.findMany({
+      take: 10,
+      where: {
+        quantity: {
+          lte: 10,
+        },
+      },
+    });
+  } catch (error) {
+    throw new ServerError(error);
+  }
+};
+
+const getPercentage = (count: number, total: number): number => {
+  if (total === 0) {
+    return 0; // Handle division by zero
+  }
+
+  const percentage = (count / total) * 100;
+  const formattedPercentage = percentage.toFixed(2); // Limit to 2 decimal places
+
+  return parseFloat(formattedPercentage) % 1 === 0
+    ? Math.round(percentage) // Convert to whole number if .00
+    : parseFloat(formattedPercentage); // Return formatted percentage
 };
 
 const GetTotalIncoming = async () =>

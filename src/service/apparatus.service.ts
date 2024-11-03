@@ -67,7 +67,6 @@ export const GetActiveApparatus = async () => {
       where: { status: true },
     });
   } catch (error) {
-    console.log(error);
     throw new ServerError(error);
   }
 };

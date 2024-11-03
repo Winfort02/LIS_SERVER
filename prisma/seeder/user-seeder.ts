@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { hashSync } from "bcrypt";
+import { ServerError } from "../../src/exceptions/request";
 
 const prismaClient = new PrismaClient();
 
@@ -18,13 +19,12 @@ async function main() {
       });
     }
   } catch (error) {
-    console.log(error)
+    throw new ServerError(error);
   }
 }
 
 main()
   .catch((e) => {
-    console.log(e);
     process.exit(1);
   })
   .finally(async () => {

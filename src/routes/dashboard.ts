@@ -4,8 +4,11 @@ import { ControllerHandler } from "../helpers/controller-handler";
 import {
   GenerateLaboratoryChartAsync,
   GenerateStockChartAsync,
+  GetLatestTransactionAsync,
+  GetLowQuantityApparatusAsync,
   GetStatsAsync,
 } from "../controllers/dashboard-controller";
+import { GetLowQuantityApparatus } from "../service/dashboard.service";
 
 const dashboardRouter = Router();
 
@@ -24,6 +27,18 @@ dashboardRouter.get(
   "/stock-chart-data",
   [AuthenticationMiddleWare],
   ControllerHandler(GenerateStockChartAsync)
+);
+
+dashboardRouter.get(
+  "/latest-transaction",
+  [AuthenticationMiddleWare],
+  ControllerHandler(GetLatestTransactionAsync)
+);
+
+dashboardRouter.get(
+  "/low-quanitity-apparatus",
+  [AuthenticationMiddleWare],
+  ControllerHandler(GetLowQuantityApparatusAsync)
 );
 
 export default dashboardRouter;

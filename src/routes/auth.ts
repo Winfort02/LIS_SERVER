@@ -4,6 +4,7 @@ import {
   SignUp,
   GetUserFromToken,
   ChangePassword,
+  ResetPassword,
 } from "../controllers/authentication";
 import { ControllerHandler } from "../helpers/controller-handler";
 import { AuthenticationMiddleWare } from "../middlewares/authentication";
@@ -25,6 +26,11 @@ authRoutes.put(
   "/change-password",
   [AuthenticationMiddleWare],
   ControllerHandler(ChangePassword)
+);
+authRoutes.put(
+  "/reset-password",
+  [AuthenticationMiddleWare],
+  ControllerHandler(ResetPassword)
 );
 
 export default authRoutes;
