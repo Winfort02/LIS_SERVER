@@ -4,6 +4,7 @@ import { ControllerHandler } from "../helpers/controller-handler";
 import {
   GenerateChemistryPDF,
   GenerateHematologyPDF,
+  GenerateTestReportAsync,
   GenerateUrinalysisPDF,
 } from "../controllers/report-controller";
 
@@ -25,6 +26,12 @@ reportRouter.get(
   "/chemistry/:id",
   [AuthenticationMiddleWare],
   ControllerHandler(GenerateChemistryPDF)
+);
+
+reportRouter.post(
+  "/test-report",
+  [AuthenticationMiddleWare],
+  ControllerHandler(GenerateTestReportAsync)
 );
 
 export default reportRouter;

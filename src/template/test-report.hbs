@@ -1,0 +1,52 @@
+<style>
+  body, html { margin: 0; padding: 0; box-sizing: border-box; font-family:
+  'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode',
+  Geneva, Verdana, sans-serif;} .container { width: 100%; padding: 10px; }
+  .header { text-align: center;} .header span { color: rgb(218, 6, 6)} table
+  {width: 97%; border-collapse: collapse; text-transform: uppercase;} table tr
+  th { border: 1px solid #000; text-align: left; padding: 5px 8px; font-size:
+  12px; font-weight: normal;} .sub-title { text-align: center; height: 20px;
+  width: 97%; background-color: rgb(29, 191, 219);}
+</style>
+
+<html>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h2> STAT<span>LAB</span> DIAGNOSTIC LABORATORY REPORT</h2>
+        <h5>Lor lin Bldg. 172-D Corner Magsaysay St. and Lizares St. Zone 6.
+          Talisay City, Neg. Occ.. Phil. 6115
+        </h5>
+        <h5>PHONE NOS. 09568255620 / 09128677606 GMAIL: statlabtalisay@gmail.com
+          FB PAGE: STAT LAB
+        </h5>
+      </div>
+      <div class="content-detail">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 30px;">NO.</th>
+              <th style="width: 350px;">PATIENT NAME</th>
+              <th style="width: 100px;">GENDER</th>
+              <th style="width: 150px;">TYPE</th>
+              <th style="width: 250px;">DATE</th>
+            </tr>
+            {{#each data}}
+              <tr>
+                <th>{{index @index}}</th>
+                <th>{{fullname
+                    patient.first_name
+                    patient.middle_name
+                    patient.last_name
+                  }}</th>
+                <th>{{patient.sex}}</th>
+                <th>{{type}}</th>
+                <th>{{dateFormat createdAt "LL"}}</th>
+              </tr>
+            {{/each}}
+          </thead>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>

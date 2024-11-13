@@ -65,6 +65,9 @@ export const GetLatestTransaction = async () => {
       include: {
         patient: true,
       },
+      orderBy: {
+        createdAt: "desc",
+      },
     });
   } catch (error) {
     throw new ServerError(error);

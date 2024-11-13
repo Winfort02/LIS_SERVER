@@ -1,13 +1,11 @@
 import { PrismaClient } from "@prisma/client";
 import { hashSync } from "bcrypt";
 import { ServerError } from "../../src/exceptions/request";
-
 const prismaClient = new PrismaClient();
 
 async function main() {
-  const userCount = await prismaClient.user.count();
-
   try {
+    const userCount = await prismaClient.user.count();
     if (userCount === 0) {
       await prismaClient.user.create({
         data: {

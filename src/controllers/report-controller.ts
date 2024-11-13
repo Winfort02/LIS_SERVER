@@ -13,6 +13,8 @@ import {
 import { ErrorCode } from "../exceptions/generic";
 import { Hematology } from "@prisma/client";
 import { Decimal } from "@prisma/client/runtime/library";
+import { GenerateTestReport } from "../service/test.service.";
+import { IReportForm } from "../helpers/common";
 
 const compiler = async (template: any, data: any) => {
   const filePath = path.join(process.cwd(), "/src/template", `${template}.hbs`);
@@ -39,7 +41,18 @@ hbs.registerHelper("total", (hematology: Hematology) => {
   );
 });
 
-hbs.registerHelper("converter", (value: number | null, converter: number) => {
+hbs.registerHelper("index", function (num) {
+  return num + 1;
+});
+
+hbs.registerHelper(
+  "fullname",
+  function (first: string, middle: string, last: string) {
+    return `${first} ${middle} ${last}`;
+  }
+);
+
+hbs.registerHelper("increment", (value: number | null, converter: number) => {
   if (!value) return null;
   return (value * converter).toFixed(2);
 });
@@ -144,6 +157,32 @@ export const GenerateChemistryPDF = async (req: Request, res: Response) => {
   await page.setContent(content);
   await page.emulateMediaType("screen");
   const filePath = `${process.cwd()}/src/pdf/chemistry.pdf`;
+  await page.pdf({
+    path: filePath,
+    format: "A4",
+    printBackground: true,
+  });
+  await browser.close();
+  // Send the PDF buffer as a response
+  res.sendFile(filePath);
+};
+
+/**
+ * Method to generate test report
+ * @param req
+ * @param res
+ * @returns Blob - PDF (Array of Test)
+ */
+export const GenerateTestReportAsync = async (req: Request, res: Response) => {
+  const request = req.body as IReportForm;
+  const tests = await GenerateTestReport(request);
+  const browser = await generateBrowser();
+  const page = await browser.newPage();
+  const content = await compiler("test-report", { data: tests });
+
+  await page.setContent(content);
+  await page.emulateMediaType("screen");
+  const filePath = `${process.cwd()}/src/pdf/test-report.pdf`;
   await page.pdf({
     path: filePath,
     format: "A4",

@@ -1,3 +1,5 @@
+type TestType = "Chemistry" | "Hematology" | "Urinalysis" | "Select-all";
+
 export const pagination = (
   page: number,
   size: number,
@@ -16,6 +18,13 @@ export const pagination = (
     meta,
   };
 };
+
+export interface IReportForm {
+  patient_id: number;
+  type: TestType;
+  dateFrom: Date;
+  dateTo: Date;
+}
 
 export const CountSingleRelationQuery = (
   keywords: string,

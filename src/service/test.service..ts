@@ -4,10 +4,12 @@ import { ServerError } from "../exceptions/request";
 import {
   CountQuery,
   CountSingleRelationQuery,
+  IReportForm,
   pagination,
   PaginationQueryById,
   PaginationWithSingleRelation,
 } from "../helpers/common";
+import moment from "moment";
 
 export const GenerateTransactionNo = async () => {
   try {
@@ -171,6 +173,54 @@ export const GetPatientTest = async (
 export const GetAllTest = async () => {
   try {
     return await prismaClient.test.findMany({
+      include: {
+        patient: true,
+      },
+    });
+  } catch (error) {
+    throw new ServerError(error);
+  }
+};
+
+const dateConvert = (d: Date) => {
+  return moment(d).add(8, "hours").format("YYYY-MM-DD hh:mm:ss");
+};
+
+export const GenerateTestReport = async (request: IReportForm) => {
+  try {
+    let whereCondition = {
+      createdAt: {
+        gte: moment(dateConvert(request.dateFrom)).startOf("day").toDate(),
+        lt: moment(dateConvert(request.dateTo)).endOf("day").toDate(),
+      },
+    } as any;
+
+    if (request.patient_id && request.type !== "Select-all") {
+      whereCondition = {
+        ...whereCondition,
+        patient_id: request.patient_id,
+        type: request.type,
+      };
+    }
+
+    if (!request.patient_id && request.type !== "Select-all") {
+      whereCondition = {
+        ...whereCondition,
+        type: request.type,
+      };
+    }
+
+    if (request.type === "Select-all" && request.patient_id) {
+      whereCondition = {
+        patient_id: request.patient_id,
+        ...whereCondition,
+      };
+    }
+
+    console.log(whereCondition);
+
+    return await prismaClient.test.findMany({
+      where: whereCondition,
       include: {
         patient: true,
       },
