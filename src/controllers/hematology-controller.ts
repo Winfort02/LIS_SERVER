@@ -67,8 +67,8 @@ export const DeleteHematology = async (req: Request, res: Response) => {
  */
 export const GetAllHematology = async (req: Request, res: Response) => {
   const { page, pageSize, keywords, offset } = PaginationRequest(req);
-  const hemotology: Hematology[] = await prismaClient.hematology.findMany(
-    PaginationWithSingleRelation({
+  const hemotology: Hematology[] = await prismaClient.hematology.findMany({
+    ...PaginationWithSingleRelation({
       keywords,
       relation: "test",
       searchProperty: "transaction_number",
@@ -76,8 +76,15 @@ export const GetAllHematology = async (req: Request, res: Response) => {
       take: pageSize,
       orderByProperty: "id",
       orderBy: "asc",
-    })
-  );
+    }),
+    include: {
+      test: {
+        include: {
+          patient: true,
+        },
+      },
+    },
+  });
   const totalPages = await prismaClient.hematology.count(
     CountSingleRelationQuery(keywords, "test", "transaction_number")
   );

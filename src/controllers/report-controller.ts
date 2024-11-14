@@ -52,7 +52,7 @@ hbs.registerHelper(
   }
 );
 
-hbs.registerHelper("increment", (value: number | null, converter: number) => {
+hbs.registerHelper("converter", (value: number | null, converter: number) => {
   if (!value) return null;
   return (value * converter).toFixed(2);
 });

@@ -217,8 +217,6 @@ export const GenerateTestReport = async (request: IReportForm) => {
       };
     }
 
-    console.log(whereCondition);
-
     return await prismaClient.test.findMany({
       where: whereCondition,
       include: {

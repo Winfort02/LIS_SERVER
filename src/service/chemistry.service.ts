@@ -61,6 +61,13 @@ export const GetChemistryPaginate = async (
         orderByProperty: "id",
         orderBy: "asc",
       }),
+      include: {
+        test: {
+          include: {
+            patient: true,
+          },
+        },
+      },
     });
 
     const totalPages = await prismaClient.chemistry.count(
